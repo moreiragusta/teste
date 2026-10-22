@@ -55,8 +55,9 @@ Os textos abaixo são a versão atual. Os marcados com `[PLACEHOLDER]` são gen�
 - Botão: **"Chamar no WhatsApp"**
 - Microtexto abaixo do botão: "Resposta em até 1 dia útil."
 
-### 2. O que a gente resolve — "Serve pra mim?"
-Quatro cartões no formato **antes → depois**:
+### 2. O que nós resolvemos — "Serve pra mim?"
+Título no site: **"O que nós resolvemos"** (pedido do Gustavo; exceção ao "a gente").
+Quatro cartões no formato **antes → depois**, numa **pilha em cascata**: um na frente, os outros atrás; a cada 5 s o da frente vai pro fim da fila. Setas dos lados (no celular, embaixo), arrastar para o lado e botão de pausar.
 
 | Frente | Antes | Depois |
 |---|---|---|
@@ -114,7 +115,7 @@ Princípio: **tecnológico e inovador nos detalhes, sem enfeite**. Histórico: a
 - **Momentos especiais:**
   0. **Slogan:** caracteres trocando que aos poucos formam "Soluções além do código."; as palavras do subtítulo alternam com o mesmo efeito (GSAP ScrambleText).
   1. **Hero:** Nukki sai de dentro do círculo (sobe, mascarado pela parte de baixo do círculo), a folha balança, depois joinha + piscadela.
-  2. **Cartões antes → depois:** ao entrar na tela, o texto do antes se embaralha e vira o depois.
+  2. **Pilha antes → depois:** cada cartão que chega na frente embaralha o texto do antes até virar o depois.
   3. **Como funciona:** um trilho se preenche conforme o scroll e acende cada passo quando chega nele (sem prender a seção).
   4. Todo o resto: padrão de entrada.
 - **Botões:** fundo da superfície com borda na cor do texto, mais grossa embaixo (no claro: branco com borda preta; no escuro, invertido). No hover o botão abaixa e a borda de baixo diminui, como se fosse apertado.
@@ -132,6 +133,8 @@ Princípio: **tecnológico e inovador nos detalhes, sem enfeite**. Histórico: a
 
 - Cor confirmada: **azul escuro** do círculo do mascote.
 - **Modo claro e modo escuro** (segue o sistema; botão no topo para trocar).
+- Modo escuro em azul-acinzentado (não quase preto: o Gustavo achou escuro demais).
+- Títulos de seção sem numeração nem rótulos tipo "01 · Serve pra mim?" (as perguntas entre aspas no briefing são só a intenção de cada seção).
 - Acento: **violeta**. Visual técnico: grade fina de fundo, linhas de 1px, rótulos em fonte mono, brilho violeta suave.
 - Tipografia: Geist (texto e títulos) + Geist Mono (rótulos, números). Centralizar tudo em variáveis CSS (`--color-*`, `--font-*`).
 

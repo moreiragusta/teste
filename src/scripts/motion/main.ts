@@ -1,6 +1,6 @@
 // Animações do site. Um padrão de entrada para tudo + momentos especiais:
-// slogan que se decodifica, palavras que alternam, Nukki no hero, "antes" que
-// vira "depois" e trilho do "Como funciona". Nada trava o scroll.
+// slogan que se decodifica, palavras que alternam, Nukki no hero, pilha de
+// cartões e trilho do "Como funciona". Nada trava o scroll.
 // Com prefers-reduced-motion nada aqui roda e o CSS mostra o estado final.
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -9,6 +9,7 @@ import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
 import { DURATION, EASE, DISTANCE, STAGGER, PARALLAX, SCRAMBLE_CHARS } from './constants';
 import { playNukkiIntro } from '../../components/mascot/nukki';
+import { initStack } from './stack';
 
 const root = document.documentElement;
 
@@ -17,7 +18,7 @@ if (root.classList.contains('motion')) {
   initLenis();
   initHero();
   initParallax();
-  initTransforms();
+  initStacks();
   initSteps();
   initReveal();
   root.classList.add('motion-ready');
@@ -101,19 +102,9 @@ function initParallax() {
   });
 }
 
-// "O que a gente resolve": ao entrar na tela, o texto do antes se embaralha e vira o depois.
-function initTransforms() {
-  gsap.utils.toArray<HTMLElement>('[data-transform-text]').forEach((el) => {
-    const after = el.textContent ?? '';
-    el.textContent = el.dataset.from ?? '';
-    gsap.to(el, {
-      duration: 1.4,
-      delay: 0.3,
-      ease: 'none',
-      scrambleText: { text: after, chars: SCRAMBLE_CHARS, revealDelay: 0.3, speed: 0.6 },
-      scrollTrigger: { trigger: el, start: 'top 75%', once: true },
-    });
-  });
+// "O que nós resolvemos": pilha de cartões em cascata (ver stack.ts).
+function initStacks() {
+  gsap.utils.toArray<HTMLElement>('[data-stack]').forEach(initStack);
 }
 
 // "Como funciona": trilho se preenche com o scroll e acende cada passo quando chega nele.

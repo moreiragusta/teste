@@ -7,3 +7,4 @@ export const STAGGER = 0.08;
 export const PARALLAX = 120; // px máximos de deslocamento para data-depth="1"
 // Caracteres usados nos textos que se "decodificam".
 export const SCRAMBLE_CHARS = '01<>/{}[]=+*#_-';
+export const STACK_INTERVAL = 5; // segundos até o cartão da frente ir para o fim da fila

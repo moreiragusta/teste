@@ -36,31 +36,31 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
     color-scheme: dark;
-    --color-bg: #07080d;
-    --color-surface: #0e1019;
+    --color-bg: #151a26;
+    --color-surface: #1d2333;
     --color-ink: #eceef5;
-    --color-muted: #9ba2b6;
-    --color-line: #1d2131;
-    --color-line-strong: #2e3449;
-    --color-grid: rgb(236 238 245 / 0.05);
+    --color-muted: #a9b0c4;
+    --color-line: #2b3246;
+    --color-line-strong: #3d4660;
+    --color-grid: rgb(236 238 245 / 0.06);
     --color-accent: #9d87ff;
     --color-accent-soft: rgb(157 135 255 / 0.14);
-    --color-glow: rgb(124 92 255 / 0.28);
+    --color-glow: rgb(124 92 255 / 0.3);
   }
 }
 
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --color-bg: #07080d;
-  --color-surface: #0e1019;
+  --color-bg: #151a26;
+  --color-surface: #1d2333;
   --color-ink: #eceef5;
-  --color-muted: #9ba2b6;
-  --color-line: #1d2131;
-  --color-line-strong: #2e3449;
-  --color-grid: rgb(236 238 245 / 0.05);
+  --color-muted: #a9b0c4;
+  --color-line: #2b3246;
+  --color-line-strong: #3d4660;
+  --color-grid: rgb(236 238 245 / 0.06);
   --color-accent: #9d87ff;
   --color-accent-soft: rgb(157 135 255 / 0.14);
-  --color-glow: rgb(124 92 255 / 0.28);
+  --color-glow: rgb(124 92 255 / 0.3);
 }
 
 *,
@@ -206,4 +206,90 @@ a {
 
 .motion-ready [data-scramble] {
   opacity: 1;
+}
+
+/*
+  Botão "de apertar": fundo da superfície, borda na cor do texto, mais grossa embaixo.
+  No hover ele abaixa e a borda de baixo diminui; no clique encosta de vez.
+  Usado no <Button> e nas setas da pilha de cartões. No modo escuro se inverte sozinho.
+*/
+.btn {
+  --depth: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius);
+  box-shadow: 0 var(--depth) 0 0 var(--color-ink);
+  transform: translateY(0);
+  cursor: pointer;
+  transition:
+    transform 0.16s var(--motion-ease),
+    box-shadow 0.16s var(--motion-ease),
+    background-color 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:hover {
+  transform: translateY(calc(var(--depth) * 0.6));
+  box-shadow: 0 calc(var(--depth) * 0.4) 0 0 var(--color-ink);
+}
+
+.btn:active {
+  transform: translateY(var(--depth));
+  box-shadow: 0 0 0 0 var(--color-ink);
+}
+
+.btn svg {
+  width: 1.15em;
+  height: 1.15em;
+  flex: none;
+  transition: transform 0.25s var(--motion-ease);
+}
+
+.btn:hover svg {
+  transform: translateX(3px);
+}
+
+.btn--sm {
+  --depth: 3px;
+  font-size: 0.875rem;
+  padding: 0.55em 1em;
+  min-height: 42px;
+  border-radius: var(--radius-sm);
+}
+
+.btn--md {
+  font-size: 1.0625rem;
+  padding: 0.85em 1.5em;
+  min-height: 54px;
+}
+
+.btn--lg {
+  --depth: 6px;
+  font-size: clamp(1.125rem, 3vw, 1.3125rem);
+  padding: 1em 2em;
+  min-height: 64px;
+}
+
+/* Botão quadrado só com ícone (setas). */
+.btn--icon {
+  --depth: 4px;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .btn svg {
+    transition: none;
+  }
 }
