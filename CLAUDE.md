@@ -60,7 +60,7 @@ Os textos abaixo são a versão atual. Os marcados com `[PLACEHOLDER]` são gen�
 
 ### 2. O que nós resolvemos — "Serve pra mim?"
 Título no site: **"O que nós resolvemos"** (pedido do Gustavo; exceção ao "a gente").
-Quatro cartões no formato **antes → depois**, numa **pilha em cascata** de "janelas de sistema" (barra com três bolinhas e endereço `nukki://…`; antes/depois escrito como alteração de código, linha − riscada e linha + em destaque): um na frente, os outros atrás; a cada 5 s o da frente vai pro fim da fila. Setas dos lados (no celular, embaixo), arrastar para o lado e botão de pausar.
+Quatro cartões no formato **antes → depois**, numa **pilha em cascata**: um na frente, os outros atrás; a cada 5 s o da frente vai pro fim da fila. Setas dos lados (no celular, embaixo), arrastar para o lado e botão de pausar.
 
 | Frente | Antes | Depois |
 |---|---|---|

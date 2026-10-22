@@ -4,32 +4,25 @@
   A cada STACK_INTERVAL (src/scripts/motion/constants.ts) o da frente vai para o fim da fila.
   Setas dos lados (no celular, embaixo) trocam manualmente; arrastar para o lado também.
   Sem JS ou com movimento reduzido, os cartões aparecem em grade, todos visíveis.
-
-  Cada cartão é uma "janela de sistema": barra com três bolinhas e endereço nukki://…,
-  e o antes/depois escrito como alteração de código (linha − riscada, linha + em destaque).
 */
 const cards = [
   {
     area: 'Automação',
-    slug: 'automacao',
     before: 'PDFs digitados na planilha, um por um.',
     after: 'Dados extraídos e organizados sozinhos.',
   },
   {
     area: 'Relatórios',
-    slug: 'relatorios',
     before: 'Uma tarde inteira montando relatório.',
     after: 'Relatório pronto em minutos.',
   },
   {
     area: 'Sistemas e apps',
-    slug: 'sistemas',
     before: 'Controle em planilha, caderno e WhatsApp.',
     after: 'Um sistema feito pro seu jeito de trabalhar.',
   },
   {
     area: 'Sites',
-    slug: 'sites',
     before: 'O cliente procura e não encontra você.',
     after: 'Um site rápido que leva direto pro seu WhatsApp.',
   },
@@ -57,34 +50,20 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
           cards.map((card, i) => (
             <li class="card" data-card aria-roledescription="cartão" aria-label={`${i + 1} de ${cards.length}: ${card.area}`}>
               <span class="card__corners" aria-hidden="true" />
-              <div class="card__bar" aria-hidden="true">
-                <span class="card__dots">
-                  <i />
-                  <i />
-                  <i />
-                </span>
-                <span class="card__path">nukki://{card.slug}</span>
-                <span class="card__count">
+              <div class="card__top">
+                <h3 class="card__area">{card.area}</h3>
+                <span class="card__count" aria-hidden="true">
                   {i + 1}/{cards.length}
                 </span>
               </div>
-              <div class="card__body">
-                <h3 class="card__area">{card.area}</h3>
-                <div class="diff">
-                  <p class="diff__line diff__line--del">
-                    <span class="diff__num" aria-hidden="true">1</span>
-                    <span class="diff__sign" aria-hidden="true">−</span>
-                    <span class="visually-hidden">Antes: </span>
-                    <s>{card.before}</s>
-                  </p>
-                  <p class="diff__line diff__line--add">
-                    <span class="diff__num" aria-hidden="true">2</span>
-                    <span class="diff__sign" aria-hidden="true">+</span>
-                    <span class="visually-hidden">Depois: {card.after}</span>
-                    <span class="diff__text" aria-hidden="true" data-after data-from={card.before}>{card.after}</span>
-                  </p>
-                </div>
-              </div>
+              <p class="card__before">
+                <span class="visually-hidden">Antes: </span>
+                <s>{card.before}</s>
+              </p>
+              <p class="card__after">
+                <span class="visually-hidden">Depois: {card.after}</span>
+                <span aria-hidden="true" data-after data-from={card.before}>{card.after}</span>
+              </p>
             </li>
           ))
         }
@@ -130,121 +109,55 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
     display: none;
   }
 
-  /* ---------- Cartão: janela de sistema ---------- */
+  /* ---------- Cartão ---------- */
   .card {
     position: relative;
     display: grid;
     align-content: start;
+    gap: 18px;
+    padding: clamp(26px, 4vw, 44px);
     background: var(--color-surface);
     border: 1px solid var(--color-line-strong);
     border-radius: var(--radius);
     box-shadow: 0 24px 48px -28px rgb(0 0 0 / 0.35);
-    overflow: hidden;
   }
 
-  .card__bar {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    gap: 14px;
-    height: 44px;
-    padding-inline: 16px;
-    border-bottom: 1px solid var(--color-line);
-    background: color-mix(in srgb, var(--color-line) 35%, var(--color-surface));
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--color-muted);
-  }
-
-  .card__dots {
+  .card__top {
     display: flex;
-    gap: 6px;
-  }
-
-  .card__dots i {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    border: 1px solid var(--color-line-strong);
-  }
-
-  .card__dots i:first-child {
-    border-color: var(--color-accent);
-    background: var(--color-accent);
-  }
-
-  .card__path {
-    justify-self: center;
-    padding: 3px 12px;
-    border-radius: 6px;
-    background: var(--color-bg);
-    border: 1px solid var(--color-line);
-    white-space: nowrap;
-  }
-
-  .card__body {
-    display: grid;
-    gap: 22px;
-    padding: clamp(22px, 4vw, 36px);
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
   }
 
   .card__area {
-    font-size: clamp(1.25rem, 2.6vw, 1.5rem);
-    font-weight: 600;
-    letter-spacing: -0.025em;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--color-accent);
   }
 
-  /* Antes/depois como alteração de código: número da linha, sinal e conteúdo. */
-  .diff {
-    display: grid;
-    gap: 6px;
-    border-radius: var(--radius-sm);
-    overflow: hidden;
-  }
-
-  .diff__line {
-    display: grid;
-    grid-template-columns: 2ch 1.5ch 1fr;
-    align-items: baseline;
-    gap: 10px;
-    padding: 12px 16px 12px 12px;
-    border-left: 2px solid transparent;
-  }
-
-  .diff__num,
-  .diff__sign {
+  .card__count {
     font-family: var(--font-mono);
     font-size: 0.8125rem;
     color: var(--color-muted);
-    text-align: right;
   }
 
-  .diff__line--del {
-    background: color-mix(in srgb, var(--color-line) 45%, transparent);
-    border-left-color: var(--color-line-strong);
+  .card__before {
     color: var(--color-muted);
   }
 
-  .diff__line--del s {
+  .card__before s {
     text-decoration-thickness: 1px;
     text-decoration-color: var(--color-line-strong);
   }
 
-  .diff__line--add {
-    background: var(--color-accent-soft);
-    border-left-color: var(--color-accent);
-  }
-
-  .diff__line--add .diff__sign {
-    color: var(--color-accent);
-    font-weight: 700;
-  }
-
-  .diff__text {
-    font-size: clamp(1.375rem, 3.4vw, 2rem);
+  .card__after {
+    font-size: clamp(1.625rem, 4vw, 2.5rem);
     font-weight: 600;
-    line-height: 1.15;
-    letter-spacing: -0.03em;
+    line-height: 1.12;
+    letter-spacing: -0.035em;
   }
 
   /* Cantos de "mira" que se fecham sobre o cartão da frente no hover. */
@@ -295,7 +208,7 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
     grid-area: cards;
     display: grid;
     grid-template-columns: 1fr;
-    /* espaço para as barras dos cartões de trás aparecerem por cima */
+    /* espaço para os cartões de trás aparecerem por cima */
     padding-top: 48px;
     touch-action: pan-y;
     user-select: none;
@@ -308,12 +221,12 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
   }
 
   /* Conteúdo dos cartões de trás fica apagado; só a borda aparece na cascata. */
-  .is-stack .card:not(.is-front) .card__body {
+  .is-stack .card:not(.is-front) > :not(.card__corners) {
     opacity: 0;
     transition: opacity 0.3s ease;
   }
 
-  .is-stack .card.is-front .card__body {
+  .is-stack .card.is-front > * {
     transition: opacity 0.4s ease 0.15s;
   }
 
