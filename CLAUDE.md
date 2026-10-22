@@ -49,7 +49,7 @@ Os textos abaixo são a versão atual. Os marcados com `[PLACEHOLDER]` são gen�
 - No centro, âncoras com nomes curtos: **Soluções · Casos · Processo · Sobre · Contato**. "Casos" some junto com a seção.
 - À direita: botão de modo claro/escuro e o botão **"Chamar no WhatsApp"**.
 - **No celular:** só o logo e o botão de modo claro/escuro (sem âncoras e sem WhatsApp no topo).
-- A barra fecha das laterais para o centro **acompanhando a rolagem** no trecho final do hero; quando o próximo bloco chega ao topo, some. Subindo, reabre do mesmo jeito.
+- Ao descer, a barra **encolhe acompanhando a rolagem** até virar uma **cápsula flutuante** no centro, só com o espaço que logo + âncoras + botões precisam (no celular, logo + modo). Depois do hero, a cápsula **sobe e some**; voltando ao hero, desce.
 
 ### 1. Hero — "O que é isso?"
 - Mascote Nukki (ver seção Animações).
@@ -97,6 +97,7 @@ Não mencionar "conversa gratuita".
 
 ### 5. Quem faz — "Dá pra confiar?"
 - Foto do Gustavo `[PLACEHOLDER]`.
+- Dois desenhos do Gustavo, sem fundo, pequenos (~20% da largura da foto), metade sobre os cantos da foto: canto superior direito sobe e desce de leve; canto inferior esquerdo gira alguns graus no próprio eixo e volta. Por enquanto marcadores "1" e "2".
 - Texto: "**Gustavo Moreira.** A Nukki é tocada por mim, do diagnóstico à entrega. Desde 2022 desenvolvendo automações e sistemas para empresas. Você fala direto com quem faz." `[PLACEHOLDER: revisar com o Gustavo]`
 
 ### 6. Contato
@@ -120,7 +121,8 @@ Princípio: **tecnológico e inovador nos detalhes, sem enfeite**. Histórico: a
   1. **Hero:** Nukki sai de dentro do círculo (sobe, mascarado pela parte de baixo do círculo), a folha balança, depois joinha + piscadela.
   2. **Pilha antes → depois:** cada cartão que chega na frente embaralha o texto do antes até virar o depois.
   3. **Como funciona:** um trilho se preenche conforme o scroll e acende cada passo quando chega nele (sem prender a seção).
-  4. Todo o resto: padrão de entrada.
+  4. **Quem faz:** os dois desenhos perto da foto (ver seção 5).
+  5. Todo o resto: padrão de entrada.
 - **Botões:** fundo da superfície com borda na cor do texto, mais grossa embaixo (no claro: branco com borda preta; no escuro, invertido). No hover o botão abaixa e a borda de baixo diminui, como se fosse apertado.
 - **Microinterações de hover:** cantos de "mira" nas células, fichas que deslizam, linha de scanner na foto, sublinhado que cresce nos links.
 - **`prefers-reduced-motion`:** desligar Lenis e animações, mostrar tudo no estado final.
@@ -152,4 +154,6 @@ Portfólio de Cristopher Martins (cristophermartins.com): estudar a fluidez (esc
 - CNPJ (se já aberto).
 - Foto e texto final da seção "Quem faz".
 - Tons finais da paleta e tipografia.
+- Os dois desenhos da seção "Quem faz".
+- Estética dos cartões de "O que nós resolvemos" (adiada; opções já mostradas: vidro com brilho, feixe de luz na borda, planta técnica, bloco violeta).
 - Desenho final do Nukki (SVG em camadas + frames do joinha/piscadela) e versão como logo.

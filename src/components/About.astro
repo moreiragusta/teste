@@ -6,8 +6,22 @@
 <section class="section" id="sobre" aria-labelledby="about-title">
   <div class="container about">
     <figure class="about__figure" data-reveal>
-      <div class="about__photo" role="img" aria-label="Foto de Gustavo Moreira (provisória)">
-        <span aria-hidden="true">GM</span>
+      <div class="about__frame">
+        <div class="about__photo" role="img" aria-label="Foto de Gustavo Moreira (provisória)">
+          <span aria-hidden="true">GM</span>
+        </div>
+
+        <!--
+          Desenhos do Gustavo, sem fundo, metade sobre os cantos da foto (~20% da largura dela).
+          TODO [PLACEHOLDER]: trocar cada .doodle__placeholder por uma <img> do desenho
+          (PNG ou SVG com fundo transparente, alt=""), mantendo as classes .doodle--float e .doodle--tilt.
+        -->
+        <div class="doodle doodle--float" aria-hidden="true">
+          <span class="doodle__placeholder">1</span>
+        </div>
+        <div class="doodle doodle--tilt" aria-hidden="true">
+          <span class="doodle__placeholder">2</span>
+        </div>
       </div>
       <figcaption class="about__caption">Gustavo Moreira · Fundador</figcaption>
     </figure>
@@ -38,8 +52,79 @@
   }
 
   .about__figure {
+    justify-self: center;
     margin: 0;
-    width: min(100%, 340px);
+    /* sobra espaço dos lados para os desenhos que passam das bordas da foto */
+    width: min(calc(100% - 80px), 340px);
+  }
+
+  .about__frame {
+    position: relative;
+  }
+
+  /* Desenhos: centro de cada um no canto da foto (metade dentro, metade fora). */
+  .doodle {
+    position: absolute;
+    z-index: 1;
+    width: 20%;
+    aspect-ratio: 1;
+    pointer-events: none;
+  }
+
+  .doodle :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  /* Canto superior direito: sobe e desce de leve. */
+  .doodle--float {
+    top: 0;
+    right: 0;
+    translate: 50% -50%;
+    animation: doodle-float 3.2s ease-in-out infinite;
+  }
+
+  /* Canto inferior esquerdo: gira alguns graus no próprio eixo e volta. */
+  .doodle--tilt {
+    bottom: 0;
+    left: 0;
+    translate: -50% 50%;
+    animation: doodle-tilt 2.8s ease-in-out infinite;
+  }
+
+  @keyframes doodle-float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes doodle-tilt {
+    0%,
+    100% {
+      transform: rotate(-8deg);
+    }
+    50% {
+      transform: rotate(8deg);
+    }
+  }
+
+  /* Marcador provisório até os desenhos chegarem. */
+  .doodle__placeholder {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    border: 1.5px dashed var(--color-accent);
+    border-radius: 50%;
+    background: var(--color-bg);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-accent);
   }
 
   .about__photo {
@@ -88,7 +173,8 @@
   }
 
   .about__caption {
-    margin-top: 14px;
+    /* metade do desenho de baixo (10% da largura) + respiro, para não ficar embaixo dele */
+    margin-top: calc(10% + 14px);
     font-family: var(--font-mono);
     font-size: 0.8125rem;
     color: var(--color-muted);
@@ -102,6 +188,10 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .doodle {
+      animation: none;
+    }
+
     .about__figure:hover .about__photo::after {
       animation: none;
     }
