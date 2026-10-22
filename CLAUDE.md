@@ -49,7 +49,7 @@ Os textos abaixo são a versão atual. Os marcados com `[PLACEHOLDER]` são gen�
 - No centro, âncoras com nomes curtos: **Soluções · Casos · Processo · Sobre · Contato**. "Casos" some junto com a seção.
 - À direita: botão de modo claro/escuro e o botão **"Chamar no WhatsApp"**.
 - **No celular:** só o logo e o botão de modo claro/escuro (sem âncoras e sem WhatsApp no topo).
-- A barra só fica no topo enquanto o hero está na tela: quando o próximo bloco chega ao topo, ela se fecha das bordas para o centro e some. Voltando ao hero, reabre.
+- A barra fecha das laterais para o centro **acompanhando a rolagem** no trecho final do hero; quando o próximo bloco chega ao topo, some. Subindo, reabre do mesmo jeito.
 
 ### 1. Hero — "O que é isso?"
 - Mascote Nukki (ver seção Animações).
