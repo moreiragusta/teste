@@ -2,6 +2,7 @@
 
 Briefing do site da Nukki Tech. Leia antes de qualquer tarefa neste projeto.
 Tudo aqui já foi decidido com o Gustavo. Se algo precisar mudar, pergunte antes.
+Quando um pedido deixar uma escolha de design/UX em aberto (o que aparece no celular, o que some, efeitos colaterais), **pergunte antes de decidir**.
 
 ## Sobre a empresa
 
@@ -45,8 +46,9 @@ Os textos abaixo são a versão atual. Os marcados com `[PLACEHOLDER]` são gen�
 
 ### Topo fixo
 - Logo Nukki Tech à esquerda.
-- No centro, âncoras com nomes curtos: **Soluções · Casos · Processo · Sobre · Contato** (no celular, numa segunda linha). "Casos" some junto com a seção.
+- No centro, âncoras com nomes curtos: **Soluções · Casos · Processo · Sobre · Contato**. "Casos" some junto com a seção.
 - À direita: botão de modo claro/escuro e o botão **"Chamar no WhatsApp"**.
+- **No celular:** só o logo e o botão de modo claro/escuro (sem âncoras e sem WhatsApp no topo).
 - A barra só fica no topo enquanto o hero está na tela: quando o próximo bloco chega ao topo, ela se fecha das bordas para o centro e some. Voltando ao hero, reabre.
 
 ### 1. Hero — "O que é isso?"

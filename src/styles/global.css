@@ -26,8 +26,6 @@
   --gutter: clamp(16px, 5vw, 40px);
   --section-space: clamp(88px, 13vw, 160px);
   --header-h: 68px;
-  --nav-row: 0px; /* linha extra das âncoras no topo (só em telas menores) */
-  --header-total: calc(var(--header-h) + var(--nav-row));
 
   /* Mesmo ritmo do JS (src/scripts/motion/constants.ts). power3.out ≈ esta curva. */
   --motion-duration: 0.8s;
@@ -63,12 +61,6 @@
   --color-accent: #9d87ff;
   --color-accent-soft: rgb(157 135 255 / 0.14);
   --color-glow: rgb(124 92 255 / 0.3);
-}
-
-@media (max-width: 959px) {
-  :root {
-    --nav-row: 44px;
-  }
 }
 
 *,

@@ -44,7 +44,7 @@ const WORDS = ['automações', 'sistemas', 'apps', 'relatórios', 'sites'];
     position: relative;
     isolation: isolate;
     overflow-x: clip;
-    padding-top: calc(var(--header-total) + clamp(40px, 8vw, 96px));
+    padding-top: calc(var(--header-h) + clamp(40px, 8vw, 96px));
     padding-bottom: var(--section-space);
   }
 
@@ -125,7 +125,7 @@ const WORDS = ['automações', 'sistemas', 'apps', 'relatórios', 'sites'];
   @media (min-width: 900px) {
     .hero__inner {
       grid-template-columns: 1.3fr 1fr;
-      min-height: calc(100svh - var(--header-total) - var(--section-space));
+      min-height: calc(100svh - var(--header-h) - var(--section-space));
     }
 
     .hero__mascot {
