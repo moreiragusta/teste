@@ -1,18 +1,61 @@
 ---
+/*
+  Topo fixo com âncoras. Só aparece enquanto o hero está na tela: quando o próximo
+  bloco chega ao topo, a barra se fecha das bordas para o centro e some.
+  Voltando ao hero, ela reabre. Com movimento reduzido, some/aparece sem animação.
+*/
 import Logo from './Logo.astro';
 import ThemeToggle from './ThemeToggle.astro';
 import WhatsAppButton from './WhatsAppButton.astro';
+import { SHOW_CASES } from '../config/site';
+
+const links = [
+  { href: '#solucoes', label: 'Soluções' },
+  ...(SHOW_CASES ? [{ href: '#casos', label: 'Casos' }] : []),
+  { href: '#processo', label: 'Processo' },
+  { href: '#sobre', label: 'Sobre' },
+  { href: '#contato', label: 'Contato' },
+];
 ---
 
-<header class="header">
+<header class="header" data-header>
   <div class="container header__inner">
     <a class="header__home" href={import.meta.env.BASE_URL} aria-label="Nukki Tech, página inicial"><Logo /></a>
+
+    <nav class="nav" aria-label="Seções">
+      <ul class="nav__list" role="list">
+        {
+          links.map((link) => (
+            <li>
+              <a class="nav__link" href={link.href}>
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
     <div class="header__actions">
       <ThemeToggle />
       <WhatsAppButton size="sm" compact />
     </div>
   </div>
 </header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  const hero = document.querySelector<HTMLElement>('[data-hero]');
+
+  if (header && hero) {
+    // Fecha quando o fim do hero passa por baixo da barra (= o próximo bloco chegou ao topo).
+    const observer = new IntersectionObserver(
+      ([entry]) => header.classList.toggle('is-closed', !entry.isIntersecting),
+      { rootMargin: `-${header.offsetHeight}px 0px 0px 0px` },
+    );
+    observer.observe(hero);
+  }
+</script>
 
 <style>
   .header {
@@ -23,25 +66,163 @@ import WhatsAppButton from './WhatsAppButton.astro';
     backdrop-filter: saturate(1.4) blur(14px);
     -webkit-backdrop-filter: saturate(1.4) blur(14px);
     border-bottom: 1px solid var(--color-line);
+    clip-path: inset(0 0 0 0);
+    transition:
+      clip-path 0.7s var(--motion-ease),
+      visibility 0s linear 0s;
+  }
+
+  /* Fechando de fora para dentro: as bordas avançam até o centro. */
+  .header.is-closed {
+    clip-path: inset(0 50% 0 50%);
+    visibility: hidden;
+    transition:
+      clip-path 0.7s cubic-bezier(0.65, 0, 0.35, 1),
+      visibility 0s linear 0.7s;
   }
 
   .header__inner {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: 'home nav actions';
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    height: var(--header-h);
+    gap: 12px 24px;
+    min-height: var(--header-h);
+    transition: opacity 0.4s ease 0.15s;
+  }
+
+  .header.is-closed .header__inner {
+    opacity: 0;
+    transition-delay: 0s;
   }
 
   .header__home {
+    grid-area: home;
     text-decoration: none;
   }
 
   .header__actions {
+    grid-area: actions;
     display: flex;
     align-items: center;
     gap: 10px;
     /* espaço para a borda de baixo do botão não encostar na linha do topo */
     padding-bottom: 3px;
+  }
+
+  .nav {
+    grid-area: nav;
+    justify-self: center;
+  }
+
+  .nav__list {
+    display: flex;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Hover: colchetes entram dos lados e o texto fica violeta. */
+  .nav__link {
+    position: relative;
+    display: inline-block;
+    padding: 10px 14px;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    letter-spacing: 0.02em;
+    color: var(--color-muted);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.25s ease;
+  }
+
+  .nav__link::before,
+  .nav__link::after {
+    position: absolute;
+    top: 50%;
+    color: var(--color-accent);
+    opacity: 0;
+    transition:
+      opacity 0.25s ease,
+      transform 0.35s var(--motion-ease);
+  }
+
+  .nav__link::before {
+    content: '[';
+    left: 2px;
+    transform: translate(-6px, -50%);
+  }
+
+  .nav__link::after {
+    content: ']';
+    right: 2px;
+    transform: translate(6px, -50%);
+  }
+
+  .nav__link:hover,
+  .nav__link:focus-visible {
+    color: var(--color-ink);
+  }
+
+  .nav__link:hover::before,
+  .nav__link:hover::after,
+  .nav__link:focus-visible::before,
+  .nav__link:focus-visible::after {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+
+  /* Telas menores: âncoras numa segunda linha que rola para o lado. */
+  @media (max-width: 959px) {
+    .header__inner {
+      grid-template-columns: auto 1fr;
+      grid-template-areas:
+        'home actions'
+        'nav  nav';
+      row-gap: 0;
+    }
+
+    .header__actions {
+      justify-self: end;
+    }
+
+    .nav {
+      justify-self: stretch;
+      height: var(--nav-row);
+      margin-inline: calc(var(--gutter) * -1);
+      padding-inline: calc(var(--gutter) - 8px);
+      border-top: 1px solid var(--color-line);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav__list {
+      height: 100%;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0;
+      width: max-content;
+      min-width: 100%;
+    }
+
+    .nav__link {
+      padding-inline: 8px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .header,
+    .header.is-closed,
+    .header__inner,
+    .header.is-closed .header__inner,
+    .nav__link::before,
+    .nav__link::after {
+      transition: none;
+    }
   }
 </style>

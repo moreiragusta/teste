@@ -25,7 +25,8 @@ if (root.classList.contains('motion')) {
 }
 
 function initLenis() {
-  const lenis = new Lenis();
+  // anchors: cliques nos links do topo (#solucoes etc.) também rolam suave.
+  const lenis = new Lenis({ anchors: true });
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add((time) => lenis.raf(time * 1000));
   gsap.ticker.lagSmoothing(0);

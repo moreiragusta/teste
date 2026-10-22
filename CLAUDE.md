@@ -45,8 +45,9 @@ Os textos abaixo são a versão atual. Os marcados com `[PLACEHOLDER]` são gen�
 
 ### Topo fixo
 - Logo Nukki Tech à esquerda.
+- No centro, âncoras com nomes curtos: **Soluções · Casos · Processo · Sobre · Contato** (no celular, numa segunda linha). "Casos" some junto com a seção.
 - À direita: botão de modo claro/escuro e o botão **"Chamar no WhatsApp"**.
-- Sem menu de navegação.
+- A barra só fica no topo enquanto o hero está na tela: quando o próximo bloco chega ao topo, ela se fecha das bordas para o centro e some. Voltando ao hero, reabre.
 
 ### 1. Hero — "O que é isso?"
 - Mascote Nukki (ver seção Animações).
@@ -103,7 +104,7 @@ Não mencionar "conversa gratuita".
 - Rodapé: Nukki Tech · CNPJ `[PLACEHOLDER]` · nukkitech.com.br
 
 ### Fora do site (não adicionar)
-Missão/visão/valores, lista de tecnologias, blog, contadores tipo "+100 projetos", depoimentos, logos de clientes, menu de navegação, pop-ups, chat flutuante.
+Missão/visão/valores, lista de tecnologias, blog, contadores tipo "+100 projetos", depoimentos, logos de clientes, pop-ups, chat flutuante.
 
 ## Animações
 
