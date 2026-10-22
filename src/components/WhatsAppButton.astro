@@ -1,0 +1,50 @@
+---
+import Button from './Button.astro';
+import { WHATSAPP_URL } from '../config/site';
+
+interface Props {
+  size?: 'sm' | 'md' | 'lg';
+  /** Texto mais curto para telas pequenas (usado no topo). */
+  compact?: boolean;
+}
+const { size = 'md', compact = false } = Astro.props;
+---
+
+<Button href={WHATSAPP_URL} size={size} target="_blank" rel="noopener">
+  {
+    compact ? (
+      <>
+        <span class="wa-long">Chamar no WhatsApp</span>
+        <span class="wa-short" aria-hidden="true">WhatsApp</span>
+      </>
+    ) : (
+      <span>Chamar no WhatsApp</span>
+    )
+  }
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+  </svg>
+  <span class="visually-hidden">(abre em nova aba)</span>
+</Button>
+
+<style>
+  .wa-short {
+    display: none;
+  }
+
+  /* Em telas bem estreitas o topo mostra só "WhatsApp" (o nome acessível continua completo). */
+  @media (max-width: 380px) {
+    .wa-long {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    .wa-short {
+      display: inline;
+    }
+  }
+</style>

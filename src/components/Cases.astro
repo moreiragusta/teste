@@ -1,0 +1,107 @@
+---
+/*
+  Seção "Na prática". Liga/desliga em src/config/site.ts (SHOW_CASES).
+  Regras: nunca inventar depoimentos, números ou logos. Casos sem nome de cliente.
+  Prints sempre com dados fictícios.
+*/
+// TODO [PLACEHOLDER]: todos os casos abaixo são genéricos. Trocar por casos reais.
+const cases = [
+  {
+    sector: '[PLACEHOLDER] Escritório de serviços',
+    change: 'Documentos analisados à mão → informações extraídas automaticamente.',
+    result: '[X horas → Y min]',
+  },
+  {
+    sector: '[PLACEHOLDER] Comércio',
+    change: 'Planilhas separadas → um painel só, atualizado sozinho.',
+    result: '[resultado]',
+  },
+  {
+    sector: '[PLACEHOLDER] Empresa de serviços',
+    change: 'Pedidos soltos no WhatsApp → pedidos organizados num sistema.',
+    result: '[resultado]',
+  },
+];
+---
+
+<section class="section" aria-labelledby="cases-title">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow" data-reveal>02 · Eles já fizeram isso?</p>
+      <h2 id="cases-title" class="section-title" data-reveal>Na prática</h2>
+    </div>
+
+    <ul class="cases" role="list">
+      {
+        cases.map((item) => (
+          <li class="case" data-reveal>
+            <h3 class="case__sector">{item.sector}</h3>
+            <p class="case__change">{item.change}</p>
+            <p class="case__result">
+              <span class="visually-hidden">Resultado: </span>
+              {item.result}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .cases {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--color-line);
+  }
+
+  /* Linhas de ficha: setor · mudança · resultado. */
+  .case {
+    display: grid;
+    gap: 8px 32px;
+    padding-block: 28px;
+    border-bottom: 1px solid var(--color-line);
+    transition: padding 0.4s var(--motion-ease);
+  }
+
+  @media (min-width: 860px) {
+    .case {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr) 11rem;
+      align-items: baseline;
+    }
+
+    .case__result {
+      text-align: right;
+    }
+  }
+
+  @media (hover: hover) {
+    .case:hover {
+      padding-left: 16px;
+    }
+
+    .case:hover .case__result {
+      color: var(--color-accent);
+    }
+  }
+
+  .case__sector {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--color-muted);
+  }
+
+  .case__change {
+    font-size: 1.125rem;
+  }
+
+  .case__result {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+</style>

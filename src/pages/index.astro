@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Solve from '../components/Solve.astro';
+import Cases from '../components/Cases.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import About from '../components/About.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import { SHOW_CASES } from '../config/site';
+---
+
+<Base>
+  <Header />
+  <main>
+    <Hero />
+    <Solve />
+    {SHOW_CASES && <Cases />}
+    <HowItWorks />
+    <About />
+    <Contact />
+  </main>
+  <Footer />
+</Base>

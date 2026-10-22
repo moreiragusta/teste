@@ -1,0 +1,140 @@
+---
+/*
+  Mascote Nukki: PLACEHOLDER.
+  TODO [PLACEHOLDER]: trocar pelo SVG final em camadas. Mantenha os mesmos
+  data-part (corpo, cabeca, folha, braco, olho-esq, olho-dir) e a animação em
+  nukki.ts continua funcionando sem mudanças.
+
+  Desenho: círculo azul escuro + Nukki saindo de dentro dele até o torso.
+  O recorte (clipPath) mostra o Nukki dentro do círculo e acima do centro dele,
+  então quando ele sobe parece sair do buraco pela parte de baixo do círculo.
+
+  Joinha + piscadela em sprite sheet (futuro): ver o slot [data-nukki-sprite].
+*/
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<div class:list={['nukki', className]} data-nukki>
+  <svg viewBox="0 0 400 400" role="img" aria-labelledby="nukki-title">
+    <title id="nukki-title">Nukki, o mascote tanuki da Nukki Tech, saindo de um círculo azul e fazendo joinha</title>
+    <defs>
+      <clipPath id="nukki-clip">
+        <circle cx="200" cy="240" r="150"></circle>
+        <rect x="0" y="0" width="400" height="240"></rect>
+      </clipPath>
+    </defs>
+
+    <circle class="nukki__circle" cx="200" cy="240" r="150"></circle>
+
+    <g clip-path="url(#nukki-clip)">
+      <g class="nukki__figure" data-nukki-figure>
+        <g data-part="corpo">
+          <path class="fur" d="M118 410C118 322 145 270 200 262c55 8 82 60 82 148Z"></path>
+          <ellipse class="fur-light" cx="200" cy="345" rx="48" ry="56"></ellipse>
+
+          <g data-part="braco">
+            <rect class="fur" x="263" y="231" width="28" height="80" rx="14" transform="rotate(32 277 271)"></rect>
+            <rect class="fur" x="292" y="180" width="17" height="38" rx="8.5" transform="rotate(-12 300 214)"></rect>
+            <rect class="fur" x="280" y="206" width="44" height="40" rx="13"></rect>
+            <path class="knuckles" d="M310 216h10M310 226h10M310 236h8"></path>
+          </g>
+
+          <g data-part="cabeca">
+            <circle class="fur" cx="145" cy="122" r="26"></circle>
+            <circle class="fur" cx="255" cy="122" r="26"></circle>
+            <circle class="fur-dark" cx="145" cy="122" r="13"></circle>
+            <circle class="fur-dark" cx="255" cy="122" r="13"></circle>
+            <ellipse class="fur" cx="200" cy="182" rx="86" ry="72"></ellipse>
+            <ellipse class="fur-dark" cx="168" cy="184" rx="30" ry="21" transform="rotate(12 168 184)"></ellipse>
+            <ellipse class="fur-dark" cx="232" cy="184" rx="30" ry="21" transform="rotate(-12 232 184)"></ellipse>
+            <ellipse class="fur-light" cx="200" cy="220" rx="36" ry="25"></ellipse>
+            <ellipse class="fur-dark" cx="200" cy="207" rx="10" ry="7"></ellipse>
+            <g data-part="olho-esq">
+              <circle class="eye" cx="170" cy="182" r="8"></circle>
+              <circle class="fur-dark" cx="172" cy="181" r="4"></circle>
+            </g>
+            <g data-part="olho-dir">
+              <circle class="eye" cx="230" cy="182" r="8"></circle>
+              <circle class="fur-dark" cx="228" cy="181" r="4"></circle>
+            </g>
+            <g data-part="folha">
+              <path class="leaf" d="M200 112C170 97 172 62 200 48c28 14 30 49 0 64Z"></path>
+              <path class="leaf-vein" d="M200 56v54"></path>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </svg>
+
+  <!-- Futuro: sprite sheet do joinha + piscadela (PNG 2x, 8 a 12 frames). -->
+  <div class="nukki__sprite" data-nukki-sprite hidden></div>
+</div>
+
+<style>
+  .nukki {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    aspect-ratio: 1;
+  }
+
+  .nukki svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  /*
+    Placeholder em traço fino (estilo wireframe) até chegar o desenho final do Gustavo.
+    Cores e traços vêm dos tokens, então funciona no modo claro e no escuro.
+  */
+  .nukki__circle {
+    fill: var(--color-brand);
+    stroke: var(--color-accent);
+    stroke-width: 1.5;
+  }
+
+  .fur,
+  .fur-light,
+  .fur-dark,
+  .eye {
+    fill: var(--color-brand);
+    stroke: #c9bcff;
+    stroke-width: 2;
+  }
+
+  .fur-dark {
+    fill: #c9bcff;
+    fill-opacity: 0.18;
+  }
+
+  .eye {
+    fill: #c9bcff;
+  }
+
+
+  .knuckles {
+    stroke: #c9bcff;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+
+  .leaf {
+    fill: var(--color-accent);
+  }
+
+  .leaf-vein {
+    stroke: var(--color-brand);
+    stroke-width: 3;
+    stroke-linecap: round;
+  }
+
+  /* Escondido até o GSAP posicionar o Nukki lá embaixo, para não piscar. */
+  :global(.motion) .nukki__figure {
+    visibility: hidden;
+  }
+</style>

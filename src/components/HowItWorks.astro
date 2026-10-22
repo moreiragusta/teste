@@ -1,0 +1,137 @@
+---
+// Só os títulos curtos dos passos (menos texto). Descrições completas estão no CLAUDE.md, se voltarem.
+const steps = ['Entendemos o seu negócio.', 'Montamos o projeto.', 'Proposta com preço e prazo.', 'Entregas por etapa.'];
+---
+
+<section class="section" aria-labelledby="how-title" data-steps>
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow" data-reveal>03 · Como é trabalhar com eles?</p>
+      <h2 id="how-title" class="section-title" data-reveal>Como funciona</h2>
+    </div>
+
+    <div class="steps-wrap">
+      <!-- Trilho que se preenche com o scroll (posicionado pelo JS entre o 1º e o último número). -->
+      <span class="steps__track" aria-hidden="true" data-track><span class="steps__fill"></span></span>
+      <ol class="steps" role="list">
+        {
+          steps.map((title, i) => (
+            <li class="step" data-step>
+              <span class="step__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="step__title">{title}</h3>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+
+    <p class="how__closing" data-reveal>Se o seu problema não se resolve com tecnologia, a gente te fala.</p>
+  </div>
+</section>
+
+<style>
+  .steps-wrap {
+    position: relative;
+  }
+
+  .steps {
+    display: grid;
+    gap: 32px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .steps {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .step {
+      grid-template-columns: 1fr;
+      align-items: start;
+      padding-right: 32px;
+    }
+  }
+
+  .step__num {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--color-line-strong);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    transition:
+      border-color var(--motion-duration) var(--motion-ease),
+      color var(--motion-duration) var(--motion-ease),
+      box-shadow var(--motion-duration) var(--motion-ease);
+  }
+
+  .step__title {
+    font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    transition: color var(--motion-duration) var(--motion-ease);
+  }
+
+  .steps__track {
+    display: none;
+    position: absolute;
+    left: var(--x, 0);
+    top: var(--y, 0);
+    width: var(--w, 0);
+    height: var(--h, 0);
+    background: var(--color-line);
+    overflow: hidden;
+  }
+
+  .steps__fill {
+    position: absolute;
+    inset: 0;
+    background: var(--color-accent);
+    transform-origin: left top;
+    transform: scale(var(--sx, 1), var(--sy, 1));
+  }
+
+  .how__closing {
+    margin-top: clamp(56px, 8vw, 96px);
+    padding-top: 28px;
+    border-top: 1px dashed var(--color-line-strong);
+    font-family: var(--font-mono);
+    font-size: clamp(1rem, 2.2vw, 1.125rem);
+    color: var(--color-muted);
+  }
+
+  /* Momento especial: os passos acendem conforme o trilho chega neles. */
+  :global(.motion-ready) .steps__track {
+    display: block;
+  }
+
+  :global(.motion) .step__title {
+    color: var(--color-muted);
+  }
+
+  :global(.motion) .step.is-lit .step__num {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    box-shadow: 0 0 0 4px var(--color-accent-soft);
+  }
+
+  :global(.motion) .step.is-lit .step__title {
+    color: var(--color-ink);
+  }
+</style>

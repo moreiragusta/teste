@@ -1,0 +1,30 @@
+---
+import { CNPJ, SITE } from '../config/site';
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <!-- TODO [PLACEHOLDER]: CNPJ fica em src/config/site.ts -->
+    <p>
+      Nukki Tech{CNPJ && ` · CNPJ ${CNPJ}`} · {SITE.domain}
+    </p>
+    <p>Este site foi feito pela Nukki.</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--color-line);
+    padding-block: 28px;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+  }
+
+  .footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 24px;
+  }
+</style>

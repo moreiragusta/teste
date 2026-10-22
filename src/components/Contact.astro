@@ -1,0 +1,114 @@
+---
+import WhatsAppButton from './WhatsAppButton.astro';
+import { EMAIL, SOCIALS } from '../config/site';
+---
+
+<section class="section contact-section" aria-labelledby="contact-title">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="contact__glow" aria-hidden="true"></div>
+
+  <div class="container contact">
+    <p class="eyebrow" data-reveal>05 · Contato</p>
+    <h2 id="contact-title" class="contact__title" data-reveal>Conta pra gente o que está dando trabalho.</h2>
+    <div data-reveal>
+      <WhatsAppButton size="lg" />
+    </div>
+
+    <div class="contact__more" data-reveal>
+      <!-- TODO [PLACEHOLDER]: e-mail e redes ficam em src/config/site.ts -->
+      <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+      <ul class="contact__socials" role="list">
+        {
+          SOCIALS.map((s) => (
+            <li>
+              <a href={s.url}>{s.name}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-section {
+    isolation: isolate;
+    overflow-x: clip;
+  }
+
+  .contact__glow {
+    position: absolute;
+    z-index: -1;
+    left: 50%;
+    top: 35%;
+    width: min(800px, 120vw);
+    aspect-ratio: 2;
+    translate: -50% 0;
+    background: radial-gradient(closest-side, var(--color-glow), transparent);
+    filter: blur(20px);
+    pointer-events: none;
+  }
+
+  .contact {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    gap: 28px;
+  }
+
+  .contact__title {
+    font-size: clamp(2.25rem, 8vw, 4.75rem);
+    letter-spacing: -0.045em;
+    max-width: 15ch;
+    margin-bottom: 12px;
+  }
+
+  .contact__more {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px 24px;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+
+  .contact__socials {
+    display: flex;
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Links com sublinhado que cresce da esquerda no hover. */
+  .contact__more a {
+    position: relative;
+    display: inline-block;
+    padding: 10px 0;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .contact__more a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 6px;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0.3);
+    transform-origin: left;
+    opacity: 0.6;
+    transition: transform 0.35s var(--motion-ease);
+  }
+
+  .contact__more a:hover {
+    color: var(--color-accent);
+  }
+
+  .contact__more a:hover::after {
+    transform: scaleX(1);
+  }
+</style>

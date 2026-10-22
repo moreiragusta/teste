@@ -1,0 +1,209 @@
+/*
+  Tokens do site. Direção: técnico e limpo, modo claro e escuro, acento violeta.
+  Confirmados: azul escuro da marca (--color-brand) e violeta como acento.
+  TODO [PLACEHOLDER]: tons exatos ainda podem ser ajustados com o Gustavo.
+*/
+:root {
+  color-scheme: light;
+  --color-bg: #fafafb;
+  --color-surface: #ffffff;
+  --color-ink: #0b0f1a;
+  --color-muted: #586074;
+  --color-line: #e3e5eb;
+  --color-line-strong: #c9cdd8;
+  --color-grid: rgb(11 15 26 / 0.06);
+  --color-brand: #14244a; /* confirmado: azul escuro do círculo do Nukki */
+  --color-accent: #6a45ff; /* violeta */
+  --color-accent-soft: rgb(106 69 255 / 0.12);
+  --color-glow: rgb(106 69 255 / 0.22);
+
+  --font-sans: 'Geist Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, 'SFMono-Regular', Consolas, monospace;
+
+  --radius: 12px;
+  --radius-sm: 8px;
+  --container: 1160px;
+  --gutter: clamp(16px, 5vw, 40px);
+  --section-space: clamp(88px, 13vw, 160px);
+  --header-h: 68px;
+
+  /* Mesmo ritmo do JS (src/scripts/motion/constants.ts). power3.out ≈ esta curva. */
+  --motion-duration: 0.8s;
+  --motion-ease: cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+/* Tema escuro: segue o sistema, a menos que a pessoa escolha no botão do topo. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --color-bg: #07080d;
+    --color-surface: #0e1019;
+    --color-ink: #eceef5;
+    --color-muted: #9ba2b6;
+    --color-line: #1d2131;
+    --color-line-strong: #2e3449;
+    --color-grid: rgb(236 238 245 / 0.05);
+    --color-accent: #9d87ff;
+    --color-accent-soft: rgb(157 135 255 / 0.14);
+    --color-glow: rgb(124 92 255 / 0.28);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-bg: #07080d;
+  --color-surface: #0e1019;
+  --color-ink: #eceef5;
+  --color-muted: #9ba2b6;
+  --color-line: #1d2131;
+  --color-line-strong: #2e3449;
+  --color-grid: rgb(236 238 245 / 0.05);
+  --color-accent: #9d87ff;
+  --color-accent-soft: rgb(157 135 255 / 0.14);
+  --color-glow: rgb(124 92 255 / 0.28);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+  margin: 0;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  position: relative;
+  padding-block: var(--section-space);
+  border-top: 1px solid var(--color-line);
+}
+
+/* Cabeçalho de seção: índice em mono + título. */
+.section-head {
+  display: grid;
+  gap: 14px;
+  margin-bottom: clamp(40px, 6vw, 72px);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.section-title {
+  font-size: clamp(2rem, 6vw, 3.5rem);
+}
+
+/* Grade técnica de fundo, apagando nas bordas. */
+.grid-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--color-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -100px;
+  z-index: 100;
+  padding: 10px 16px;
+  background: var(--color-ink);
+  color: var(--color-bg);
+  border-radius: var(--radius-sm);
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+/*
+  Estados iniciais das animações. Só valem com a classe .motion (posta no <head>
+  quando não há prefers-reduced-motion). Sem ela, tudo aparece no estado final.
+*/
+.motion [data-reveal],
+.motion [data-scramble] {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.motion-ready [data-scramble] {
+  opacity: 1;
+}

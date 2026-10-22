@@ -1,0 +1,162 @@
+---
+const cards = [
+  {
+    area: 'Automação',
+    before: 'PDFs digitados na planilha, um por um.',
+    after: 'Dados extraídos e organizados sozinhos.',
+  },
+  {
+    area: 'Relatórios',
+    before: 'Uma tarde inteira montando relatório.',
+    after: 'Relatório pronto em minutos.',
+  },
+  {
+    area: 'Sistemas e apps',
+    before: 'Controle em planilha, caderno e WhatsApp.',
+    after: 'Um sistema feito pro seu jeito de trabalhar.',
+  },
+  {
+    area: 'Sites',
+    before: 'O cliente procura e não encontra você.',
+    after: 'Um site rápido que leva direto pro seu WhatsApp.',
+  },
+];
+---
+
+<section class="section" id="conteudo" aria-labelledby="solve-title">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow" data-reveal>01 · Serve pra mim?</p>
+      <h2 id="solve-title" class="section-title" data-reveal>O que a gente resolve</h2>
+    </div>
+
+    <ul class="cells" role="list">
+      {
+        cards.map((card, i) => (
+          <li class="cell" data-reveal>
+            <span class="cell__corners" aria-hidden="true" />
+            <div class="cell__top">
+              <h3 class="cell__area">{card.area}</h3>
+              <span class="cell__index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            </div>
+            <p class="cell__before">
+              <span class="visually-hidden">Antes: </span>
+              <s>{card.before}</s>
+            </p>
+            <p class="cell__after">
+              <span class="visually-hidden">Depois: {card.after}</span>
+              <span aria-hidden="true" data-transform-text data-from={card.before}>{card.after}</span>
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  /* Grade com linhas compartilhadas de 1px, como uma tabela técnica. */
+  .cells {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--color-line);
+    border-left: 1px solid var(--color-line);
+  }
+
+  @media (min-width: 760px) {
+    .cells {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .cell {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 18px;
+    padding: clamp(24px, 4vw, 44px);
+    border-right: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
+    transition: background-color 0.3s ease;
+  }
+
+  .cell__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+  }
+
+  .cell__area {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .cell__index {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+  }
+
+  .cell__before {
+    color: var(--color-muted);
+  }
+
+  .cell__before s {
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--color-line-strong);
+  }
+
+  .cell__after {
+    font-size: clamp(1.5rem, 3.4vw, 2.125rem);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+  }
+
+  /* Hover: fundo violeta suave e cantos de "mira" que se fecham sobre a célula. */
+  .cell__corners,
+  .cell__corners::before,
+  .cell__corners::after {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .cell__corners {
+    inset: 10px;
+    --c: var(--color-accent);
+    --l: 14px;
+    background:
+      linear-gradient(var(--c), var(--c)) top left / var(--l) 1.5px,
+      linear-gradient(var(--c), var(--c)) top left / 1.5px var(--l),
+      linear-gradient(var(--c), var(--c)) top right / var(--l) 1.5px,
+      linear-gradient(var(--c), var(--c)) top right / 1.5px var(--l),
+      linear-gradient(var(--c), var(--c)) bottom left / var(--l) 1.5px,
+      linear-gradient(var(--c), var(--c)) bottom left / 1.5px var(--l),
+      linear-gradient(var(--c), var(--c)) bottom right / var(--l) 1.5px,
+      linear-gradient(var(--c), var(--c)) bottom right / 1.5px var(--l);
+    background-repeat: no-repeat;
+    opacity: 0;
+    transform: scale(1.04);
+    transition:
+      opacity 0.3s ease,
+      transform 0.45s var(--motion-ease);
+  }
+
+  @media (hover: hover) {
+    .cell:hover {
+      background: var(--color-accent-soft);
+    }
+
+    .cell:hover .cell__corners {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+</style>
