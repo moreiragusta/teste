@@ -131,7 +131,6 @@ a {
 .section {
   position: relative;
   padding-block: var(--section-space);
-  border-top: 1px solid var(--color-line);
 }
 
 /* Cabeçalho de seção: índice em mono + título. */

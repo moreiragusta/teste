@@ -7,6 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin';
 import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
+import { registerLenis } from '../scroll-lock';
 import { DURATION, EASE, DISTANCE, STAGGER, PARALLAX, SCRAMBLE_CHARS } from './constants';
 import { playNukkiIntro } from '../../components/mascot/nukki';
 import { initStack } from './stack';
@@ -27,6 +28,7 @@ if (root.classList.contains('motion')) {
 function initLenis() {
   // anchors: cliques nos links do topo (#solucoes etc.) também rolam suave.
   const lenis = new Lenis({ anchors: true });
+  registerLenis(lenis);
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add((time) => lenis.raf(time * 1000));
   gsap.ticker.lagSmoothing(0);

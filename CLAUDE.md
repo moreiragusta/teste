@@ -70,7 +70,9 @@ Quatro cartões no formato **antes → depois**, numa **pilha em cascata**: um n
 | Sites | O cliente procura e não encontra você | Um site rápido que leva direto pro seu WhatsApp |
 
 ### 3. Na prática — "Eles já fizeram isso?"
-2 a 3 casos em formato de ficha: **setor · antes · depois · resultado**. Por enquanto, todos `[PLACEHOLDER]`:
+Trabalhos num **carrossel com destaque** (inspirado nos "latest works" de cristophermartins.com, sem copiar): o trabalho em destaque em tamanho cheio com borda violeta, os outros menores e apagados; setas, arrastar, ←/→, barra de progresso e contador. Cada trabalho: print, setor, título, resultado e **etiquetas** (ex.: Automação, UI/UX, Mobile first). Clicar abre um **painel lateral** (no celular, folha que sobe de baixo) com setor, título, etiquetas, antes, depois, resultado e mais prints.
+
+Ficha de cada trabalho: **setor · antes · depois · resultado**. Por enquanto, todos `[PLACEHOLDER]` (prints desenhados em CSS até chegarem os reais):
 
 > **[PLACEHOLDER] Escritório de serviços**
 > Antes: documentos analisados manualmente, página por página.
@@ -139,6 +141,7 @@ Princípio: **tecnológico e inovador nos detalhes, sem enfeite**. Histórico: a
 - Cor confirmada: **azul escuro** do círculo do mascote.
 - **Modo claro e modo escuro** (segue o sistema; botão no topo para trocar).
 - Modo escuro em azul-acinzentado (não quase preto: o Gustavo achou escuro demais).
+- Sem linhas divisórias entre as seções (só a linha fina acima do rodapé).
 - Títulos de seção sem numeração nem rótulos tipo "01 · Serve pra mim?" (as perguntas entre aspas no briefing são só a intenção de cada seção).
 - Acento: **violeta**. Visual técnico: grade fina de fundo, linhas de 1px, rótulos em fonte mono, brilho violeta suave.
 - Tipografia: Geist (texto e títulos) + Geist Mono (rótulos, números). Centralizar tudo em variáveis CSS (`--color-*`, `--font-*`).
@@ -149,7 +152,7 @@ Portfólio de Cristopher Martins (cristophermartins.com): estudar a fluidez (esc
 
 ## Pendências (perguntar ao Gustavo quando chegar a hora)
 
-- Casos reais para a seção "Na prática" (setor, antes, depois, resultado).
+- Trabalhos reais para "Na prática" (setor, título, antes, depois, resultado, etiquetas e prints com dados fictícios).
 - Número de WhatsApp, e-mail e quais redes sociais.
 - CNPJ (se já aberto).
 - Foto e texto final da seção "Quem faz".
