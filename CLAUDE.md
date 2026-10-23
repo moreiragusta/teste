@@ -70,7 +70,7 @@ Quatro cartões no formato **antes → depois**, numa **pilha em cascata**: um n
 | Sites | O cliente procura e não encontra você | Um site rápido que leva direto pro seu WhatsApp |
 
 ### 3. Na prática — "Eles já fizeram isso?"
-Trabalhos num **carrossel com destaque** (inspirado nos "latest works" de cristophermartins.com, sem copiar): o trabalho em destaque em tamanho cheio com borda violeta, os outros menores e apagados; setas, arrastar, ←/→, barra de progresso e contador. Cada trabalho: print, setor, título, resultado e **etiquetas** (ex.: Automação, UI/UX, Mobile first). Clicar abre um **painel lateral** (no celular, folha que sobe de baixo) com setor, título, etiquetas, antes, depois, resultado e mais prints.
+Trabalhos num **carrossel com destaque** (inspirado nos "latest works" de cristophermartins.com, sem copiar): o trabalho em destaque em tamanho cheio com borda violeta, os outros menores e apagados; setas, arrastar, ←/→, barra de progresso e contador. Cada trabalho: print, setor, título, resultado e **etiquetas** (ex.: Automação, UI/UX, Mobile first). Clicar abre uma **janela grande no centro** (dados à esquerda, imagens em destaque à direita); no celular, folha que sobe de baixo com o conteúdo primeiro e as imagens depois.
 
 Ficha de cada trabalho: **setor · antes · depois · resultado**. Por enquanto, todos `[PLACEHOLDER]` (prints desenhados em CSS até chegarem os reais):
 

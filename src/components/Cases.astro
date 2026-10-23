@@ -102,47 +102,57 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
     <span class="cases__count" aria-live="polite" data-cases-count>{pad(1)} / {pad(cases.length)}</span>
   </div>
 
-  <!-- Painel de detalhes (um <article> por trabalho; o script mostra o escolhido). -->
+  <!--
+    Janela de detalhes (um <article> por trabalho; o script mostra o escolhido).
+    Desktop: janela grande no centro, dados à esquerda e imagens em destaque à direita.
+    Celular: folha que sobe de baixo, conteúdo primeiro e imagens depois.
+  -->
   <dialog class="panel" data-case-panel aria-label="Detalhes do trabalho">
     <button class="panel__close" type="button" data-case-close aria-label="Fechar detalhes">
       <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
       </svg>
     </button>
-    {
-      cases.map((item, i) => (
-        <article class="panel__case" data-case-detail={i} hidden>
-          <p class="panel__sector">
-            {item.sector} · {pad(i + 1)}/{pad(cases.length)}
-          </p>
-          <h3 class="panel__title">{item.title}</h3>
-          <ul class="case__tags" role="list" aria-label="Etiquetas">
-            {item.tags.map((tag) => (
-              <li>{tag}</li>
-            ))}
-          </ul>
-          <dl class="panel__facts">
-            <div>
-              <dt>Antes</dt>
-              <dd>{item.before}</dd>
+    <!-- data-lenis-prevent: deixa a roda do mouse e o dedo rolarem aqui dentro. -->
+    <div class="panel__scroll" data-panel-scroll data-lenis-prevent>
+      {
+        cases.map((item, i) => (
+          <article class="panel__case" data-case-detail={i} hidden>
+            <div class="panel__info">
+              <p class="panel__sector">
+                {item.sector} · {pad(i + 1)}/{pad(cases.length)}
+              </p>
+              <h3 class="panel__title">{item.title}</h3>
+              <ul class="case__tags" role="list" aria-label="Etiquetas">
+                {item.tags.map((tag) => (
+                  <li>{tag}</li>
+                ))}
+              </ul>
+              <dl class="panel__facts">
+                <div>
+                  <dt>Antes</dt>
+                  <dd>{item.before}</dd>
+                </div>
+                <div>
+                  <dt>Depois</dt>
+                  <dd>{item.after}</dd>
+                </div>
+                <div class="panel__result">
+                  <dt>Resultado</dt>
+                  <dd>{item.result}</dd>
+                </div>
+              </dl>
             </div>
-            <div>
-              <dt>Depois</dt>
-              <dd>{item.after}</dd>
+            {/* TODO [PLACEHOLDER]: prints do trabalho (dados fictícios). */}
+            <div class="panel__gallery">
+              <CasePrint variant={item.print} label={`${item.title}, tela 1`} />
+              <CasePrint variant={item.print === 'phone' ? 'phone' : 'dashboard'} label={`${item.title}, tela 2`} />
+              <CasePrint variant={item.print === 'table' ? 'dashboard' : 'table'} label={`${item.title}, tela 3`} />
             </div>
-            <div class="panel__result">
-              <dt>Resultado</dt>
-              <dd>{item.result}</dd>
-            </div>
-          </dl>
-          {/* TODO [PLACEHOLDER]: mais prints do trabalho (dados fictícios). */}
-          <div class="panel__gallery">
-            <CasePrint variant={item.print} label={`${item.title}, tela 1`} />
-            <CasePrint variant={item.print === 'phone' ? 'phone' : 'dashboard'} label={`${item.title}, tela 2`} />
-          </div>
-        </article>
-      ))
-    }
+          </article>
+        ))
+      }
+    </div>
   </dialog>
 </section>
 
@@ -231,11 +241,12 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
 
     // Painel de detalhes
     const details = [...panel.querySelectorAll<HTMLElement>('[data-case-detail]')];
+    const scroller = panel.querySelector<HTMLElement>('[data-panel-scroll]');
 
     const open = (index: number) => {
       details.forEach((d, i) => (d.hidden = i !== index));
       panel.showModal();
-      panel.scrollTop = 0;
+      if (scroller) scroller.scrollTop = 0;
       lockScroll(true);
     };
 
@@ -243,8 +254,8 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
       if (!panel.open) return;
       panel.classList.add('is-closing');
       const done = () => {
-        panel.classList.remove('is-closing');
         panel.close();
+        panel.classList.remove('is-closing');
       };
       if (reduce.matches) done();
       else setTimeout(done, 280);
@@ -525,72 +536,143 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
     color: var(--color-muted);
   }
 
-  /* ---------- Painel de detalhes ---------- */
+  /* ---------- Janela de detalhes ---------- */
   .panel {
     position: fixed;
-    inset: 0 0 0 auto;
-    width: min(560px, 100vw);
+    inset: 0;
+    width: min(1120px, calc(100vw - 48px));
     max-width: none;
-    height: 100dvh;
+    height: min(760px, calc(100dvh - 48px));
     max-height: none;
-    margin: 0;
-    padding: clamp(28px, 5vw, 48px);
-    padding-top: 72px;
-    border: 0;
-    border-left: 1px solid var(--color-line);
+    margin: auto;
+    padding: 0;
+    border: 1px solid var(--color-line-strong);
+    border-radius: 16px;
     background: var(--color-bg);
     color: var(--color-ink);
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    transform: translateX(0);
+    overflow: hidden;
+    box-shadow: 0 40px 100px -30px rgb(0 0 0 / 0.5);
+    opacity: 1;
+    transform: none;
     transition:
-      transform 0.45s var(--motion-ease),
-      display 0.45s allow-discrete,
-      overlay 0.45s allow-discrete;
+      opacity 0.35s ease,
+      transform 0.45s var(--motion-ease);
   }
 
   @starting-style {
     .panel[open] {
-      transform: translateX(100%);
+      opacity: 0;
+      transform: translateY(24px) scale(0.97);
     }
   }
 
   .panel.is-closing {
-    transform: translateX(100%);
-    transition: transform 0.28s cubic-bezier(0.55, 0, 1, 0.45);
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+    transition:
+      opacity 0.25s ease,
+      transform 0.28s cubic-bezier(0.55, 0, 1, 0.45);
   }
 
   .panel::backdrop {
-    background: rgb(5 7 12 / 0.55);
-    backdrop-filter: blur(4px);
+    background: rgb(5 7 12 / 0.6);
+    backdrop-filter: blur(6px);
+    transition: opacity 0.35s ease;
   }
 
-  /* Celular: sobe de baixo, ocupando quase a tela toda. */
-  @media (max-width: 640px) {
+  @starting-style {
+    .panel[open]::backdrop {
+      opacity: 0;
+    }
+  }
+
+  .panel.is-closing::backdrop {
+    opacity: 0;
+  }
+
+  .panel__scroll {
+    height: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .panel__case {
+    display: grid;
+    grid-template-columns: minmax(300px, 0.8fr) 1.2fr;
+    min-height: 100%;
+  }
+
+  .panel__case[hidden] {
+    display: none;
+  }
+
+  /* Dados à esquerda: ficam parados enquanto as imagens rolam. */
+  .panel__info {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    display: grid;
+    gap: 20px;
+    padding: clamp(32px, 4vw, 56px);
+  }
+
+  /* Imagens à direita, em destaque. */
+  .panel__gallery {
+    display: grid;
+    align-content: start;
+    gap: 20px;
+    padding: clamp(20px, 3vw, 32px);
+    padding-top: 76px;
+    background:
+      linear-gradient(var(--color-grid) 1px, transparent 1px) 0 0 / 32px 32px,
+      linear-gradient(90deg, var(--color-grid) 1px, transparent 1px) 0 0 / 32px 32px,
+      color-mix(in srgb, var(--color-line) 30%, var(--color-bg));
+    border-left: 1px solid var(--color-line);
+  }
+
+  /* Celular: folha que sobe de baixo; conteúdo primeiro, imagens depois. */
+  @media (max-width: 760px) {
     .panel {
       inset: auto 0 0 0;
       width: 100vw;
       height: 92dvh;
-      border-left: 0;
-      border-top: 1px solid var(--color-line);
+      border-width: 1px 0 0;
       border-radius: 20px 20px 0 0;
     }
 
     @starting-style {
       .panel[open] {
+        opacity: 1;
         transform: translateY(100%);
       }
     }
 
     .panel.is-closing {
+      opacity: 1;
       transform: translateY(100%);
+    }
+
+    .panel__case {
+      grid-template-columns: 1fr;
+    }
+
+    .panel__info {
+      position: static;
+      padding: 64px 20px 28px;
+    }
+
+    .panel__gallery {
+      padding: 20px;
+      border-left: 0;
+      border-top: 1px solid var(--color-line);
     }
   }
 
   .panel__close {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    z-index: 2;
+    top: 16px;
+    right: 16px;
     display: grid;
     place-items: center;
     width: 44px;
@@ -598,7 +680,7 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
     padding: 0;
     border: 1px solid var(--color-line-strong);
     border-radius: var(--radius-sm);
-    background: transparent;
+    background: var(--color-bg);
     color: var(--color-ink);
     cursor: pointer;
     transition:
@@ -616,15 +698,6 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
     height: 18px;
   }
 
-  .panel__case {
-    display: grid;
-    gap: 20px;
-  }
-
-  .panel__case[hidden] {
-    display: none;
-  }
-
   .panel__sector {
     font-family: var(--font-mono);
     font-size: 0.8125rem;
@@ -632,13 +705,13 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
   }
 
   .panel__title {
-    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    font-size: clamp(1.75rem, 3.2vw, 2.5rem);
   }
 
   .panel__facts {
     display: grid;
     gap: 16px;
-    margin: 8px 0;
+    margin: 8px 0 0;
   }
 
   .panel__facts dt {
@@ -651,7 +724,7 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
 
   .panel__facts dd {
     margin: 4px 0 0;
-    font-size: 1.125rem;
+    font-size: 1.0625rem;
   }
 
   .panel__result {
@@ -664,11 +737,6 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
     font-family: var(--font-mono);
     font-size: 1.5rem;
     font-weight: 600;
-  }
-
-  .panel__gallery {
-    display: grid;
-    gap: 16px;
   }
 
   @media (prefers-reduced-motion: reduce) {
