@@ -68,12 +68,13 @@ const steps = ['Entendemos o seu negócio.', 'Montamos o projeto.', 'Proposta co
     place-items: center;
     width: 48px;
     height: 48px;
-    border: 1px solid var(--color-line-strong);
+    border: var(--toon-border) solid var(--color-ink);
     border-radius: var(--radius-sm);
-    background: var(--color-bg);
+    background: var(--color-surface);
+    box-shadow: var(--toon-depth) var(--toon-depth) 0 0 var(--color-ink);
     font-family: var(--font-mono);
     font-size: 0.875rem;
-    color: var(--color-muted);
+    color: var(--color-ink);
     transition:
       border-color var(--motion-duration) var(--motion-ease),
       color var(--motion-duration) var(--motion-ease),
@@ -124,10 +125,16 @@ const steps = ['Entendemos o seu negócio.', 'Montamos o projeto.', 'Proposta co
     color: var(--color-muted);
   }
 
+  :global(.motion) .step__num {
+    border-color: var(--color-line-strong);
+    box-shadow: var(--toon-depth) var(--toon-depth) 0 0 var(--color-line-strong);
+    color: var(--color-muted);
+  }
+
   :global(.motion) .step.is-lit .step__num {
     border-color: var(--color-accent);
     color: var(--color-accent);
-    box-shadow: 0 0 0 4px var(--color-accent-soft);
+    box-shadow: var(--toon-depth) var(--toon-depth) 0 0 var(--color-accent);
   }
 
   :global(.motion) .step.is-lit .step__title {

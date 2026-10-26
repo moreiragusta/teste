@@ -131,7 +131,8 @@
     position: relative;
     aspect-ratio: 4 / 5;
     border-radius: var(--radius);
-    border: 1px solid var(--color-line-strong);
+    border: var(--toon-border) solid var(--color-ink);
+    box-shadow: var(--toon-depth) var(--toon-depth) 0 0 var(--color-ink);
     background:
       linear-gradient(var(--color-grid) 1px, transparent 1px) 0 0 / 24px 24px,
       linear-gradient(90deg, var(--color-grid) 1px, transparent 1px) 0 0 / 24px 24px,
@@ -142,7 +143,9 @@
     font-size: 3rem;
     color: var(--color-line-strong);
     overflow: hidden;
-    transition: border-color 0.3s ease;
+    transition:
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
   }
 
   /* Linha de "scanner" que passa pela foto no hover. */
@@ -159,6 +162,7 @@
   @media (hover: hover) {
     .about__figure:hover .about__photo {
       border-color: var(--color-accent);
+      box-shadow: var(--toon-depth) var(--toon-depth) 0 0 var(--color-accent);
     }
 
     .about__figure:hover .about__photo::after {

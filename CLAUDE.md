@@ -126,6 +126,7 @@ Princípio: **tecnológico e inovador nos detalhes, sem enfeite**. Histórico: a
   4. **Quem faz:** os dois desenhos perto da foto (ver seção 5).
   5. Todo o resto: padrão de entrada.
 - **Botões:** fundo da superfície com borda na cor do texto, mais grossa embaixo (no claro: branco com borda preta; no escuro, invertido). No hover o botão abaixa e a borda de baixo diminui, como se fosse apertado.
+- **Estilo "cartoon" (mesmo DNA do botão, mais suave):** borda de 1,5px na cor do texto + sombra dura de 3px (`--toon-border`, `--toon-depth`) nos cartões de "O que nós resolvemos" (o da frente com sombra violeta e afunda no hover; os de trás só borda) e nos detalhes: números dos passos (violeta quando acesos), etiquetas, botão de tema, botão de pausa e moldura da foto. Sem cores ou formas novas (a 2ª versão ficou infantil por causa delas).
 - **Microinterações de hover:** cantos de "mira" nas células, fichas que deslizam, linha de scanner na foto, sublinhado que cresce nos links.
 - **`prefers-reduced-motion`:** desligar Lenis e animações, mostrar tudo no estado final.
 
@@ -158,5 +159,4 @@ Portfólio de Cristopher Martins (cristophermartins.com): estudar a fluidez (esc
 - Foto e texto final da seção "Quem faz".
 - Tons finais da paleta e tipografia.
 - Os dois desenhos da seção "Quem faz".
-- Estética dos cartões de "O que nós resolvemos" (adiada; opções já mostradas: vidro com brilho, feixe de luz na borda, planta técnica, bloco violeta).
 - Desenho final do Nukki (SVG em camadas + frames do joinha/piscadela) e versão como logo.

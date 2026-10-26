@@ -22,6 +22,9 @@
 
   --radius: 12px;
   --radius-sm: 8px;
+  /* Estilo "cartoon" dos cartões e detalhes (mesmo DNA do botão, mais suave): borda grossa + sombra dura. */
+  --toon-border: 1.5px;
+  --toon-depth: 3px;
   --container: 1160px;
   --gutter: clamp(16px, 5vw, 40px);
   --section-space: clamp(88px, 13vw, 160px);

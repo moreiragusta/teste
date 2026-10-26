@@ -117,9 +117,41 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
     gap: 18px;
     padding: clamp(26px, 4vw, 44px);
     background: var(--color-surface);
-    border: 1px solid var(--color-line-strong);
+    /* Estilo "cartoon": borda grossa e sombra dura, mesmo DNA do botão. */
+    border: var(--toon-border) solid var(--color-ink);
     border-radius: var(--radius);
-    box-shadow: 0 24px 48px -28px rgb(0 0 0 / 0.35);
+    box-shadow: var(--toon-depth) var(--toon-depth) 0 0 var(--color-ink);
+    /* top/left (e não transform/translate) porque o GSAP controla o transform da pilha. */
+    top: 0;
+    left: 0;
+    transition:
+      top 0.16s var(--motion-ease),
+      left 0.16s var(--motion-ease),
+      box-shadow 0.16s var(--motion-ease);
+  }
+
+  /* Cartão da frente: sombra violeta. */
+  .is-stack .card.is-front {
+    box-shadow: var(--toon-depth) var(--toon-depth) 0 0 var(--color-accent);
+  }
+
+  /* Cartões de trás na cascata: só a borda, sem sombra (menos ruído). */
+  .is-stack .card:not(.is-front) {
+    box-shadow: none;
+  }
+
+  /* Hover: o cartão "afunda" e a sombra diminui, como o botão. */
+  @media (hover: hover) {
+    .stack:not(.is-stack) .card:hover,
+    .is-stack .card.is-front:hover {
+      top: calc(var(--toon-depth) * 0.6);
+      left: calc(var(--toon-depth) * 0.6);
+      box-shadow: calc(var(--toon-depth) * 0.4) calc(var(--toon-depth) * 0.4) 0 0 var(--color-accent);
+    }
+
+    .stack:not(.is-stack) .card:hover {
+      box-shadow: calc(var(--toon-depth) * 0.4) calc(var(--toon-depth) * 0.4) 0 0 var(--color-ink);
+    }
   }
 
   .card__top {
@@ -299,22 +331,23 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
   .stack__pause {
     display: grid;
     place-items: center;
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
     padding: 0;
-    border: 1px solid var(--color-line-strong);
+    border: var(--toon-border) solid var(--color-ink);
     border-radius: var(--radius-sm);
-    background: transparent;
-    color: var(--color-muted);
+    background: var(--color-surface);
+    box-shadow: var(--toon-depth) var(--toon-depth) 0 0 var(--color-ink);
+    color: var(--color-ink);
     cursor: pointer;
     transition:
-      color 0.2s ease,
-      border-color 0.2s ease;
+      translate 0.16s var(--motion-ease),
+      box-shadow 0.16s var(--motion-ease);
   }
 
   .stack__pause:hover {
-    color: var(--color-ink);
-    border-color: var(--color-ink);
+    translate: 2px 2px;
+    box-shadow: 1px 1px 0 0 var(--color-ink);
   }
 
   .stack__pause svg {
