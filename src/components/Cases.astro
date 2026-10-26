@@ -49,7 +49,13 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
 
 <section class="section cases" id="casos" aria-labelledby="cases-title" data-cases>
   <div class="container cases__head">
-    <h2 id="cases-title" class="section-title" data-reveal>Na prática</h2>
+    <div class="cases__intro">
+      <h2 id="cases-title" class="section-title" data-reveal>Casos</h2>
+      <p class="section-lead" data-reveal>
+        Alguns trabalhos que já entregamos. Sem nome de cliente e com dados fictícios nas telas, mas com o problema e
+        o resultado de verdade.
+      </p>
+    </div>
     <div class="cases__nav" data-reveal>
       <button class="btn btn--icon" type="button" data-cases-prev aria-label="Trabalho anterior">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -296,6 +302,11 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
     align-items: flex-end;
     gap: 24px;
     margin-bottom: clamp(32px, 5vw, 56px);
+  }
+
+  .cases__intro {
+    display: grid;
+    gap: 14px;
   }
 
   .cases__head .section-title {

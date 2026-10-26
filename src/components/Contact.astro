@@ -8,10 +8,12 @@ import { EMAIL, SOCIALS } from '../config/site';
   <div class="contact__glow" aria-hidden="true"></div>
 
   <div class="container contact">
-    <h2 id="contact-title" class="contact__title" data-reveal>Conta pra gente o que está dando trabalho.</h2>
+    <h2 id="contact-title" class="section-title" data-reveal>Contato</h2>
+    <p class="contact__lead" data-reveal>Conte para nós o que está dando trabalho.</p>
     <div data-reveal>
       <WhatsAppButton size="lg" />
     </div>
+    <p class="contact__micro" data-reveal>Respondemos em até 1 dia útil.</p>
 
     <div class="contact__more" data-reveal>
       <!-- TODO [PLACEHOLDER]: e-mail e redes ficam em src/config/site.ts -->
@@ -55,11 +57,21 @@ import { EMAIL, SOCIALS } from '../config/site';
     gap: 28px;
   }
 
-  .contact__title {
-    font-size: clamp(2.25rem, 8vw, 4.75rem);
-    letter-spacing: -0.045em;
-    max-width: 15ch;
-    margin-bottom: 12px;
+  /* Frase principal do contato (o título da seção agora é "Contato", igual ao menu). */
+  .contact__lead {
+    max-width: 18ch;
+    margin: -8px 0 12px;
+    font-size: clamp(1.75rem, 5vw, 3rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+
+  .contact__micro {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--color-muted);
   }
 
   .contact__more {

@@ -35,7 +35,11 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
 <section class="section" id="solucoes" aria-labelledby="solve-title">
   <div class="container">
     <div class="section-head">
-      <h2 id="solve-title" class="section-title" data-reveal>O que nós resolvemos</h2>
+      <h2 id="solve-title" class="section-title" data-reveal>Soluções</h2>
+      <p class="section-lead" data-reveal>
+        Encontramos o que toma tempo da sua equipe e transformamos em algo que funciona sozinho. Veja o antes e o
+        depois de cada tipo de trabalho.
+      </p>
     </div>
 
     <div class="stack" data-stack role="region" aria-roledescription="carrossel" aria-labelledby="solve-title" data-reveal>
@@ -75,14 +79,23 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
         </svg>
       </button>
 
-      <div class="stack__bar">
-        <button class="stack__pause" type="button" data-stack-pause aria-pressed="false" aria-label="Pausar troca automática">
-          <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"></path></svg>
-          <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7Z"></path></svg>
-        </button>
-        <ol class="stack__dots" role="list" aria-hidden="true">
-          {cards.map(() => <li class="stack__dot" data-stack-dot><span /></li>)}
-        </ol>
+      <button class="stack__pause" type="button" data-stack-pause aria-pressed="false" aria-label="Pausar troca automática">
+        <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"></path></svg>
+        <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7Z"></path></svg>
+      </button>
+
+      <!-- Nomes das frentes: mostram as quatro de uma vez e levam direto a cada uma. -->
+      <div class="stack__bar" role="group" aria-label="Escolher frente">
+        {
+          cards.map((card, i) => (
+            <button class="stack__tab" type="button" data-stack-tab={i}>
+              <span>{card.area}</span>
+              <span class="stack__tab-track" aria-hidden="true">
+                <span class="stack__tab-fill" />
+              </span>
+            </button>
+          ))
+        }
       </div>
     </div>
   </div>
@@ -105,7 +118,8 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
   }
 
   .stack__nav,
-  .stack__bar {
+  .stack__bar,
+  .stack__pause {
     display: none;
   }
 
@@ -229,7 +243,7 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
     grid-template-columns: auto minmax(0, 640px) auto;
     grid-template-areas:
       'prev cards next'
-      '.    bar   .';
+      '.    bar   pause';
     justify-content: center;
     align-items: center;
     column-gap: clamp(16px, 4vw, 48px);
@@ -281,46 +295,72 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
   .is-stack .stack__bar {
     grid-area: bar;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
-    gap: 16px;
+    gap: 4px 24px;
   }
 
-  /* Celular: setas embaixo, uma de cada lado da barra de progresso. */
+  .is-stack .stack__pause {
+    grid-area: pause;
+    display: grid;
+  }
+
+  /* Celular: nomes numa linha só embaixo dos cartões; setas e pausa embaixo deles. */
   @media (max-width: 759px) {
     .stack.is-stack {
       grid-template-columns: auto 1fr auto;
       grid-template-areas:
         'cards cards cards'
-        'prev  bar   next';
+        'bar   bar   bar'
+        'prev  pause next';
       column-gap: 12px;
+      row-gap: 20px;
+    }
+
+    .is-stack .stack__pause {
+      justify-self: center;
+    }
+
+    .is-stack .stack__bar {
+      justify-content: space-between;
+      gap: 4px 8px;
+    }
+
+    .is-stack .stack__tab {
+      font-size: 0.75rem;
     }
   }
 
-  .stack__dots {
-    display: flex;
+  /* Nome da frente; o ativo fica na cor do texto e a barra embaixo se enche até a próxima troca. */
+  .stack__tab {
+    display: grid;
     gap: 6px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
+    min-height: 44px;
+    align-content: center;
+    padding: 6px 2px;
+    border: 0;
+    background: none;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    cursor: pointer;
+    transition: color 0.25s ease;
   }
 
-  /* Bolinha vira barra no cartão atual e se preenche até a próxima troca. */
-  .stack__dot {
+  .stack__tab:hover,
+  .stack__tab.is-active {
+    color: var(--color-ink);
+  }
+
+  .stack__tab-track {
     position: relative;
-    width: 8px;
-    height: 8px;
-    border-radius: 999px;
-    background: var(--color-line-strong);
+    height: 2px;
+    border-radius: 2px;
+    background: var(--color-line);
     overflow: hidden;
-    transition: width 0.4s var(--motion-ease);
   }
 
-  .stack__dot.is-active {
-    width: 40px;
-  }
-
-  .stack__dot span {
+  .stack__tab-fill {
     position: absolute;
     inset: 0;
     background: var(--color-accent);

@@ -37,30 +37,32 @@ Requisitos:
 
 - Frases curtas. Títulos com até ~10 palavras.
 - Fala de **problemas e resultados**, nunca de tecnologia. Nada de "ETL", "API", "stack", "solução robusta", "alavancar".
-- A marca fala como "a gente". A seção "Quem faz" fala em primeira pessoa ("eu").
+- A marca fala como **"nós"** (decidido em 26/10/2026; antes era "a gente"). A carta da seção "Sobre" fala em primeira pessoa ("eu").
 - Nunca prometer o que uma operação de uma pessoa não sustenta (nada de "24h", "entrega em 48h").
 
 ## Estrutura da página (ordem fixa)
+
+**Títulos das seções iguais aos nomes do menu:** Soluções, Casos, Processo, Sobre, Contato. Cada seção tem uma **descrição curta** (1 parágrafo, `.section-lead`) embaixo do título.
 
 Os textos abaixo são a versão atual. Os marcados com `[PLACEHOLDER]` são genéricos e serão trocados depois: deixe-os visualmente marcados no código (comentário `TODO`) para fácil localização.
 
 ### Topo fixo
 - Logo Nukki Tech à esquerda.
 - No centro, âncoras com nomes curtos: **Soluções · Casos · Processo · Sobre · Contato**. "Casos" some junto com a seção.
-- À direita: botão de modo claro/escuro e o botão **"Chamar no WhatsApp"**.
+- À direita: botão de modo claro/escuro e um **botão pequeno verde do WhatsApp**, só com o ícone (balão com telefone), no estilo cartoon.
 - **No celular:** só o logo e o botão de modo claro/escuro (sem âncoras e sem WhatsApp no topo).
 - Ao descer, a barra **encolhe acompanhando a rolagem** até virar uma **cápsula flutuante** no centro, só com o espaço que logo + âncoras + botões precisam (no celular, logo + modo). Depois do hero, a cápsula **sobe e some**; voltando ao hero, desce.
 
 ### 1. Hero — "O que é isso?"
 - Mascote Nukki (ver seção Animações).
 - Título: **"Soluções além do código."** (o slogan).
-- Subtítulo: "A gente cria [automações / sistemas / apps / relatórios / sites]", com a palavra alternando sozinha.
+- Subtítulo: "Nós criamos [automações / sistemas / apps / relatórios / sites]", com a palavra alternando sozinha.
 - Botão: **"Chamar no WhatsApp"**
 - Microtexto abaixo do botão: "Resposta em até 1 dia útil."
 
 ### 2. O que nós resolvemos — "Serve pra mim?"
-Título no site: **"O que nós resolvemos"** (pedido do Gustavo; exceção ao "a gente").
-Quatro cartões no formato **antes → depois**, numa **pilha em cascata**: um na frente, os outros atrás; a cada 5 s o da frente vai pro fim da fila. Setas dos lados (no celular, embaixo), arrastar para o lado e botão de pausar.
+Título no site: **"Soluções"**. Descrição: "Encontramos o que toma tempo da sua equipe e transformamos em algo que funciona sozinho. Veja o antes e o depois de cada tipo de trabalho."
+Quatro cartões no formato **antes → depois**, numa **pilha em cascata**: um na frente, os outros atrás; a cada 5 s o da frente vai pro fim da fila. Setas dos lados (no celular, embaixo), arrastar para o lado e botão de pausar. Embaixo da pilha, os **nomes das quatro frentes** (no lugar das bolinhas): clicáveis, o ativo com uma barra violeta que se enche até a próxima troca.
 
 | Frente | Antes | Depois |
 |---|---|---|
@@ -69,7 +71,8 @@ Quatro cartões no formato **antes → depois**, numa **pilha em cascata**: um n
 | Sistemas e apps | Controle em planilha, caderno e WhatsApp | Um sistema feito pro seu jeito de trabalhar |
 | Sites | O cliente procura e não encontra você | Um site rápido que leva direto pro seu WhatsApp |
 
-### 3. Na prática — "Eles já fizeram isso?"
+### 3. Casos — "Eles já fizeram isso?"
+Título no site: **"Casos"**. Descrição: "Alguns trabalhos que já entregamos. Sem nome de cliente e com dados fictícios nas telas, mas com o problema e o resultado de verdade."
 Trabalhos num **carrossel com destaque** (inspirado nos "latest works" de cristophermartins.com, sem copiar): o trabalho em destaque em tamanho cheio com borda violeta, os outros menores e apagados; setas, arrastar, ←/→, barra de progresso e contador. Cada trabalho: print, setor, título, resultado e **etiquetas** (ex.: Automação, UI/UX, Mobile first). Clicar abre uma **janela grande no centro** (dados à esquerda, imagens em destaque à direita); no celular, folha que sobe de baixo com o conteúdo primeiro e as imagens depois.
 
 Ficha de cada trabalho: **setor · antes · depois · resultado**. Por enquanto, todos `[PLACEHOLDER]` (prints desenhados em CSS até chegarem os reais):
@@ -85,7 +88,8 @@ Regras desta seção:
 - Se não houver casos reais no lançamento, a seção pode ficar oculta (deixar fácil de ligar/desligar).
 - Rodapé pode trazer: "Este site foi feito pela Nukki."
 
-### 4. Como funciona — "Como é trabalhar com eles?"
+### 4. Processo — "Como é trabalhar com eles?"
+Título no site: **"Processo"**. Descrição: "Um caminho simples, com tudo combinado antes de começar. Você sabe o que vai receber, em que ordem e quanto custa."
 1. **Entendemos o seu negócio.** Antes de falar de tecnologia, entendemos sua rotina e onde está o problema.
 2. **Montamos o projeto.** O que vai ser feito, em que ordem, e o que fica de fora.
 3. **Proposta com preço e prazo.** Tudo definido por etapa, antes de começar.
@@ -93,17 +97,19 @@ Regras desta seção:
 
 No site aparecem só os títulos curtos dos passos (pouco texto).
 
-Fechamento: *"Se o seu problema não se resolve com tecnologia, a gente te fala."*
+Fechamento: *"Se o seu problema não se resolve com tecnologia, nós avisamos."*
 
 Não mencionar "conversa gratuita".
 
-### 5. Quem faz — "Dá pra confiar?"
+### 5. Sobre — "Dá pra confiar?"
+Título no site: **"Sobre"**.
 - Foto do Gustavo `[PLACEHOLDER]`.
 - Dois desenhos do Gustavo, sem fundo, pequenos (~20% da largura da foto), metade sobre os cantos da foto: canto superior direito sobe e desce de leve; canto inferior esquerdo gira alguns graus no próprio eixo e volta. Por enquanto marcadores "1" e "2".
-- Texto: "**Gustavo Moreira.** A Nukki é tocada por mim, do diagnóstico à entrega. Desde 2022 desenvolvendo automações e sistemas para empresas. Você fala direto com quem faz." `[PLACEHOLDER: revisar com o Gustavo]`
+- Texto em forma de **carta de apresentação** (primeira pessoa), assinada "Gustavo Moreira · Fundador da Nukki Tech": "Olá, eu sou o Gustavo." + desde 2022 desenvolvo automações e sistemas; criei a Nukki para resolver de perto o que trava escritórios, comércios e empresas de serviço; você fala comigo, do problema à entrega; se tecnologia não for o caminho, eu digo. `[PLACEHOLDER: revisar com o Gustavo]`
 
 ### 6. Contato
-- Título: **"Conta pra gente o que está dando trabalho."**
+- Título no site: **"Contato"**. Frase principal embaixo: **"Conte para nós o que está dando trabalho."**
+- Embaixo do botão: "Respondemos em até 1 dia útil."
 - Botão grande: "Chamar no WhatsApp" (link `https://wa.me/55XXXXXXXXXXX` `[PLACEHOLDER]` com mensagem pré-preenchida).
 - Abaixo, menores: e-mail `[PLACEHOLDER]` e ícones de redes `[PLACEHOLDER: quais redes]`.
 - Rodapé: Nukki Tech · CNPJ `[PLACEHOLDER]` · nukkitech.com.br

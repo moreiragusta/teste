@@ -7,7 +7,7 @@
 */
 import Logo from './Logo.astro';
 import ThemeToggle from './ThemeToggle.astro';
-import WhatsAppButton from './WhatsAppButton.astro';
+import WhatsAppIconButton from './WhatsAppIconButton.astro';
 import { SHOW_CASES } from '../config/site';
 
 const links = [
@@ -40,7 +40,7 @@ const links = [
 
       <div class="header__actions">
         <ThemeToggle />
-        <WhatsAppButton size="sm" />
+        <WhatsAppIconButton />
       </div>
     </div>
   </div>
@@ -236,7 +236,7 @@ const links = [
     }
 
     .nav,
-    .header__actions :global(.btn) {
+    .header__actions :global(.wa-icon) {
       display: none;
     }
   }

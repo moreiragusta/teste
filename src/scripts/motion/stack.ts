@@ -15,7 +15,8 @@ const SWIPE = 50; // px de arrasto para trocar
 export function initStack(root: HTMLElement) {
   const list = root.querySelector<HTMLElement>('[data-stack-cards]');
   const cards = gsap.utils.toArray<HTMLElement>('[data-card]', root);
-  const dots = gsap.utils.toArray<HTMLElement>('[data-stack-dot] span', root);
+  const tabs = gsap.utils.toArray<HTMLButtonElement>('[data-stack-tab]', root);
+  const fills = tabs.map((tab) => tab.querySelector<HTMLElement>('.stack__tab-fill')!);
   const pauseButton = root.querySelector<HTMLButtonElement>('[data-stack-pause]');
   const n = cards.length;
   if (!list || n < 2) return;
@@ -64,15 +65,17 @@ export function initStack(root: HTMLElement) {
     });
   };
 
-  // Barra de progresso da bolinha ativa = relógio da troca automática.
+  // Barra embaixo do nome ativo = relógio da troca automática.
   let timer: gsap.core.Tween | null = null;
   const startTimer = () => {
     timer?.kill();
-    dots.forEach((dot, i) => {
-      dot.parentElement?.classList.toggle('is-active', i === current);
-      gsap.set(dot, { scaleX: 0 });
+    tabs.forEach((tab, i) => {
+      tab.classList.toggle('is-active', i === current);
+      if (i === current) tab.setAttribute('aria-current', 'true');
+      else tab.removeAttribute('aria-current');
+      gsap.set(fills[i], { scaleX: 0 });
     });
-    timer = gsap.to(dots[current], {
+    timer = gsap.to(fills[current], {
       scaleX: 1,
       duration: STACK_INTERVAL,
       ease: 'none',
@@ -118,6 +121,21 @@ export function initStack(root: HTMLElement) {
     transformFront();
     startTimer();
   };
+
+  // Pular direto para uma frente pelo nome.
+  const jumpTo = (index: number) => {
+    if (index === current) return;
+    if (index === (current + 1) % n) return go(1, true);
+    if (index === (current - 1 + n) % n) return go(-1, true);
+    list.setAttribute('aria-live', 'polite');
+    current = index;
+    gsap.set(cards[current], { x: 90, rotation: 6, y: 0, scale: 1, autoAlpha: 0 });
+    place(true);
+    transformFront();
+    startTimer();
+  };
+
+  tabs.forEach((tab, i) => tab.addEventListener('click', () => jumpTo(i)));
 
   // Controles
   root.querySelector('[data-stack-next]')?.addEventListener('click', () => go(1, true));
