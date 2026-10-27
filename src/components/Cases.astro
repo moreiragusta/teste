@@ -354,6 +354,9 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
 
   /* ---------- Trabalho ---------- */
   .case {
+    /* Prende textos com posição absoluta (ex.: .visually-hidden) dentro do cartão;
+       sem isso, no cartão ativo eles escapavam do carrossel e alargavam a página no celular. */
+    position: relative;
     flex: 0 0 var(--card);
     scroll-snap-align: start;
     display: grid;

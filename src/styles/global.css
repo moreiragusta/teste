@@ -133,6 +133,8 @@ a {
 
 .section {
   position: relative;
+  /* Nada dentro de uma seção pode alargar a página para os lados. */
+  overflow-x: clip;
   padding-block: var(--section-space);
 }
 
