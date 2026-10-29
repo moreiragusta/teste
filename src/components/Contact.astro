@@ -86,54 +86,54 @@ const links = [
     text-wrap: balance;
   }
 
-  /* E-mail e redes como ícones no estilo "cartoon" (borda grossa + sombra dura, afundam no hover). */
+  /* E-mail e redes: ícones soltos (sem caixa). No hover/foco o ícone cresce e fica violeta. */
   .contact__icons {
     display: flex;
-    gap: 16px;
-    margin: 8px 0 0;
+    gap: 12px;
+    margin: 4px 0 0;
     padding: 0;
     list-style: none;
   }
 
   .contact__icon {
+    /* área de toque confortável, mas invisível */
     display: grid;
     place-items: center;
     width: 52px;
     height: 52px;
-    border: var(--toon-border) solid var(--color-ink);
     border-radius: var(--radius-sm);
-    background: var(--color-surface);
-    box-shadow: var(--toon-depth) var(--toon-depth) 0 0 var(--color-ink);
     color: var(--color-ink);
-    transition:
-      translate 0.16s var(--motion-ease),
-      box-shadow 0.16s var(--motion-ease),
-      color 0.2s ease;
-  }
-
-  .contact__icon:hover {
-    translate: 2px 2px;
-    box-shadow: 1px 1px 0 0 var(--color-accent);
-    color: var(--color-accent);
-  }
-
-  .contact__icon:active {
-    translate: var(--toon-depth) var(--toon-depth);
-    box-shadow: none;
+    transition: color 0.25s ease;
   }
 
   .contact__icon svg {
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
     fill: none;
     stroke: currentColor;
     stroke-width: 1.8;
     stroke-linecap: round;
     stroke-linejoin: round;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .contact__icon:hover,
+  .contact__icon:focus-visible {
+    color: var(--color-accent);
+  }
+
+  .contact__icon:hover svg,
+  .contact__icon:focus-visible svg {
+    transform: scale(1.35);
+  }
+
+  .contact__icon:active svg {
+    transform: scale(1.2);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .contact__icon {
+    .contact__icon,
+    .contact__icon svg {
       transition: none;
     }
   }

@@ -109,7 +109,7 @@ Título no site: **"Sobre"**.
 ### 6. Contato
 - Título no site: **"Contato"**. Frase principal embaixo: **"Conte para nós o que está dando trabalho."**
 - Botão grande: "Chamar no WhatsApp" (link `https://wa.me/55XXXXXXXXXXX` `[PLACEHOLDER]` com mensagem pré-preenchida).
-- Abaixo: **ícones** (estilo cartoon, com link) de e-mail `[PLACEHOLDER]`, Instagram e LinkedIn `[PLACEHOLDER: links e se vale manter as redes]`. As redes vêm de `SOCIALS` em `src/config/site.ts` (apagar a linha tira a rede do site).
+- Abaixo: **ícones soltos** (sem caixa/botão; no hover crescem e ficam violeta, para fugir do padrão de "apertar"), com link, de e-mail `[PLACEHOLDER]`, Instagram e LinkedIn `[PLACEHOLDER: links e se vale manter as redes]`. As redes vêm de `SOCIALS` em `src/config/site.ts` (apagar a linha tira a rede do site).
 - **Sem** prazo de resposta no site ("Resposta em até 1 dia útil" foi removido em 29/10/2026).
 - Rodapé: Nukki Tech · CNPJ `[PLACEHOLDER]` · nukkitech.com.br
 
