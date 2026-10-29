@@ -136,7 +136,10 @@ Princípio: **tecnológico e inovador nos detalhes, sem enfeite**. Histórico: a
 - **`prefers-reduced-motion`:** desligar Lenis e animações, mostrar tudo no estado final.
 
 ### Mascote: status dos assets
-- O desenho final do Nukki **ainda não existe em vetor**. Usar um placeholder simples (círculo azul escuro + silhueta) com a mesma estrutura de peças, para trocar depois sem refazer a animação.
+- O desenho final do Nukki **ainda não existe em vetor**. Desde 29/10/2026 o site usa uma **imagem provisória** (bitmap gerado pelo Gustavo, com contorno branco em volta do Nukki inteiro) no hero, no logo do topo e no ícone da aba:
+  - `src/assets/nukki.png`: imagem completa (logo e favicon em `public/`).
+  - `src/assets/nukki-figura.png`: só o Nukki + contorno, sem o círculo; o círculo é desenhado em SVG no `Nukki.astro` na mesma posição.
+  - Entrada no hero: o círculo cresce, o Nukki sobe de dentro dele (recortado pela parte de baixo) com um leve pulo e depois tudo flutua devagar.
 - Plano final:
   - Corpo do Nukki como **SVG em camadas nomeadas** (`corpo`, `cabeca`, `folha`, `braco`, `olho-esq`, `olho-dir`), animado por peças com GSAP.
   - Joinha + piscadela: possivelmente desenhados quadro a quadro (Procreate/Krita, 8 a 12 frames, PNG com fundo transparente, 2x o tamanho de exibição) e montados em **sprite sheet**, disparado pelo GSAP quando o Nukki termina de subir.

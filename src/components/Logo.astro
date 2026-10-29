@@ -1,10 +1,11 @@
 ---
-// TODO [PLACEHOLDER]: o Nukki desenhado pelo Gustavo deve virar o símbolo da marca.
-// Trocar o .logo__mark pelo SVG final quando existir.
+// TODO [PLACEHOLDER]: imagem provisória do Nukki; trocar pelo SVG final do logo.
+import { Image } from 'astro:assets';
+import nukki from '../assets/nukki.png';
 ---
 
 <span class="logo">
-  <span class="logo__mark" aria-hidden="true">N</span>
+  <Image class="logo__mark" src={nukki} alt="" width={36} densities={[1, 2, 3]} format="webp" loading="eager" />
   <span class="logo__text">Nukki<span class="logo__tech">Tech</span></span>
 </span>
 
@@ -20,17 +21,9 @@
   }
 
   .logo__mark {
-    display: grid;
-    place-items: center;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background: var(--color-brand);
-    color: #fff;
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    font-weight: 700;
-    box-shadow: 0 0 0 1px var(--color-line-strong);
+    width: 36px;
+    height: auto;
+    margin-block: -4px;
   }
 
   .logo__tech {

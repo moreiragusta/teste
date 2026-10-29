@@ -1,16 +1,26 @@
 ---
 /*
-  Mascote Nukki: PLACEHOLDER.
-  TODO [PLACEHOLDER]: trocar pelo SVG final em camadas. Mantenha os mesmos
-  data-part (corpo, cabeca, folha, braco, olho-esq, olho-dir) e a animação em
-  nukki.ts continua funcionando sem mudanças.
+  Mascote Nukki: imagem provisória (gerada em bitmap, com contorno branco em volta).
+  TODO [PLACEHOLDER]: trocar pelo SVG final em camadas (corpo, cabeca, folha, braco,
+  olho-esq, olho-dir). A animação em nukki.ts já anima o que existir de data-part.
 
-  Desenho: círculo azul escuro + Nukki saindo de dentro dele até o torso.
-  O recorte (clipPath) mostra o Nukki dentro do círculo e acima do centro dele,
-  então quando ele sobe parece sair do buraco pela parte de baixo do círculo.
+  Duas camadas alinhadas no mesmo recorte (679x716):
+  - o círculo azul é desenhado aqui (mesma posição do círculo da imagem);
+  - nukki-figura.png é só o Nukki + contorno. O clipPath mostra a figura dentro do
+    círculo e acima do centro dele, então quando ela sobe parece sair do buraco.
 
   Joinha + piscadela em sprite sheet (futuro): ver o slot [data-nukki-sprite].
 */
+import { getImage } from 'astro:assets';
+import figura from '../../assets/nukki-figura.png';
+
+const W = 679;
+const H = 716;
+// Círculo da imagem original, medido no recorte.
+const CIRCLE = { cx: 336.1, cy: 379.8, r: 335.9 };
+
+const img = await getImage({ src: figura, width: W, format: 'webp', quality: 85 });
+
 interface Props {
   class?: string;
 }
@@ -18,53 +28,21 @@ const { class: className } = Astro.props;
 ---
 
 <div class:list={['nukki', className]} data-nukki>
-  <svg viewBox="0 0 400 400" role="img" aria-labelledby="nukki-title">
-    <title id="nukki-title">Nukki, o mascote tanuki da Nukki Tech, saindo de um círculo azul e fazendo joinha</title>
+  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="nukki-title">
+    <title id="nukki-title">Nukki, o mascote tanuki da Nukki Tech, saindo de um círculo azul e acenando</title>
     <defs>
       <clipPath id="nukki-clip">
-        <circle cx="200" cy="240" r="150"></circle>
-        <rect x="0" y="0" width="400" height="240"></rect>
+        <circle cx={CIRCLE.cx} cy={CIRCLE.cy} r={CIRCLE.r}></circle>
+        <rect x="0" y="0" width={W} height={CIRCLE.cy}></rect>
       </clipPath>
     </defs>
 
-    <circle class="nukki__circle" cx="200" cy="240" r="150"></circle>
+    <circle class="nukki__circle" data-nukki-circle cx={CIRCLE.cx} cy={CIRCLE.cy} r={CIRCLE.r}></circle>
 
     <g clip-path="url(#nukki-clip)">
       <g class="nukki__figure" data-nukki-figure>
         <g data-part="corpo">
-          <path class="fur" d="M118 410C118 322 145 270 200 262c55 8 82 60 82 148Z"></path>
-          <ellipse class="fur-light" cx="200" cy="345" rx="48" ry="56"></ellipse>
-
-          <g data-part="braco">
-            <rect class="fur" x="263" y="231" width="28" height="80" rx="14" transform="rotate(32 277 271)"></rect>
-            <rect class="fur" x="292" y="180" width="17" height="38" rx="8.5" transform="rotate(-12 300 214)"></rect>
-            <rect class="fur" x="280" y="206" width="44" height="40" rx="13"></rect>
-            <path class="knuckles" d="M310 216h10M310 226h10M310 236h8"></path>
-          </g>
-
-          <g data-part="cabeca">
-            <circle class="fur" cx="145" cy="122" r="26"></circle>
-            <circle class="fur" cx="255" cy="122" r="26"></circle>
-            <circle class="fur-dark" cx="145" cy="122" r="13"></circle>
-            <circle class="fur-dark" cx="255" cy="122" r="13"></circle>
-            <ellipse class="fur" cx="200" cy="182" rx="86" ry="72"></ellipse>
-            <ellipse class="fur-dark" cx="168" cy="184" rx="30" ry="21" transform="rotate(12 168 184)"></ellipse>
-            <ellipse class="fur-dark" cx="232" cy="184" rx="30" ry="21" transform="rotate(-12 232 184)"></ellipse>
-            <ellipse class="fur-light" cx="200" cy="220" rx="36" ry="25"></ellipse>
-            <ellipse class="fur-dark" cx="200" cy="207" rx="10" ry="7"></ellipse>
-            <g data-part="olho-esq">
-              <circle class="eye" cx="170" cy="182" r="8"></circle>
-              <circle class="fur-dark" cx="172" cy="181" r="4"></circle>
-            </g>
-            <g data-part="olho-dir">
-              <circle class="eye" cx="230" cy="182" r="8"></circle>
-              <circle class="fur-dark" cx="228" cy="181" r="4"></circle>
-            </g>
-            <g data-part="folha">
-              <path class="leaf" d="M200 112C170 97 172 62 200 48c28 14 30 49 0 64Z"></path>
-              <path class="leaf-vein" d="M200 56v54"></path>
-            </g>
-          </g>
+          <image href={img.src} width={W} height={H}></image>
         </g>
       </g>
     </g>
@@ -79,7 +57,7 @@ const { class: className } = Astro.props;
     position: relative;
     width: 100%;
     max-width: 440px;
-    aspect-ratio: 1;
+    aspect-ratio: 679 / 716;
   }
 
   .nukki svg {
@@ -88,53 +66,14 @@ const { class: className } = Astro.props;
     overflow: visible;
   }
 
-  /*
-    Placeholder em traço fino (estilo wireframe) até chegar o desenho final do Gustavo.
-    Cores e traços vêm dos tokens, então funciona no modo claro e no escuro.
-  */
+  /* Mesmo azul do círculo da imagem, para a figura encaixar sem emenda. */
   .nukki__circle {
-    fill: var(--color-brand);
-    stroke: var(--color-accent);
-    stroke-width: 1.5;
-  }
-
-  .fur,
-  .fur-light,
-  .fur-dark,
-  .eye {
-    fill: var(--color-brand);
-    stroke: #c9bcff;
-    stroke-width: 2;
-  }
-
-  .fur-dark {
-    fill: #c9bcff;
-    fill-opacity: 0.18;
-  }
-
-  .eye {
-    fill: #c9bcff;
-  }
-
-
-  .knuckles {
-    stroke: #c9bcff;
-    stroke-width: 2;
-    stroke-linecap: round;
-  }
-
-  .leaf {
-    fill: var(--color-accent);
-  }
-
-  .leaf-vein {
-    stroke: var(--color-brand);
-    stroke-width: 3;
-    stroke-linecap: round;
+    fill: #142543;
   }
 
   /* Escondido até o GSAP posicionar o Nukki lá embaixo, para não piscar. */
-  :global(.motion) .nukki__figure {
+  :global(.motion) .nukki__figure,
+  :global(.motion) .nukki__circle {
     visibility: hidden;
   }
 </style>
