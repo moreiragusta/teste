@@ -275,7 +275,10 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
           moved = false;
           return;
         }
-        open(Number(button.dataset.caseOpen));
+        const index = Number(button.dataset.caseOpen);
+        // Leva o caso clicado para o destaque (por trás da janela), para ele já estar lá ao fechar.
+        if (index !== active) goTo(index);
+        open(index);
       });
     });
 

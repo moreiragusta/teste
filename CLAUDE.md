@@ -73,7 +73,7 @@ Quatro cartões no formato **antes → depois**, numa **pilha em cascata**: um n
 
 ### 3. Casos — "Eles já fizeram isso?"
 Título no site: **"Casos"**. Descrição: "Alguns trabalhos que já entregamos. Sem nome de cliente e com dados fictícios nas telas, mas com o problema e o resultado de verdade."
-Trabalhos num **carrossel com destaque** (inspirado nos "latest works" de cristophermartins.com, sem copiar): o trabalho em destaque em tamanho cheio com borda violeta, os outros menores e apagados; setas, arrastar, ←/→, barra de progresso e contador. Cada trabalho: print, setor, título, resultado e **etiquetas** (ex.: Automação, UI/UX, Mobile first). Clicar abre uma **janela grande no centro** (dados à esquerda, imagens em destaque à direita); no celular, folha que sobe de baixo com o conteúdo primeiro e as imagens depois.
+Trabalhos num **carrossel com destaque** (inspirado nos "latest works" de cristophermartins.com, sem copiar): o trabalho em destaque em tamanho cheio com borda violeta, os outros menores e apagados; setas, arrastar, ←/→, barra de progresso e contador. Cada trabalho: print, setor, título, resultado e **etiquetas** (ex.: Automação, UI/UX, Mobile first). Clicar num trabalho leva ele para o destaque do carrossel e abre uma **janela grande no centro** (dados à esquerda, imagens em destaque à direita); no celular, folha que sobe de baixo com o conteúdo primeiro e as imagens depois.
 
 Ficha de cada trabalho: **setor · antes · depois · resultado**. Por enquanto, todos `[PLACEHOLDER]` (prints desenhados em CSS até chegarem os reais):
 
