@@ -5,8 +5,9 @@
 import { gsap } from 'gsap';
 import { DURATION, EASE } from '../../scripts/motion/constants';
 
-// Distância (em unidades do viewBox) para o Nukki começar escondido abaixo do círculo.
-const RISE_FROM = 520;
+// Distância (em unidades do viewBox) para o Nukki começar inteiro abaixo do círculo
+// (a borda de baixo do círculo fica em y ≈ 716), sem nenhum pedaço aparecendo antes de subir.
+const RISE_FROM = 740;
 
 // Flutuação contínua depois da entrada.
 const FLOAT_Y = 8;
