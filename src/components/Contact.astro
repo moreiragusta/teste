@@ -1,6 +1,20 @@
 ---
 import WhatsAppButton from './WhatsAppButton.astro';
 import { EMAIL, SOCIALS } from '../config/site';
+
+// Ícones em traço (mesmo estilo dos outros ícones do site). E-mail sempre aparece; redes vêm de SOCIALS.
+const ICONS: Record<string, string> = {
+  email: '<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7l8.5 6 8.5-6"/>',
+  instagram:
+    '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"/>',
+  linkedin:
+    '<rect x="3" y="3" width="18" height="18" rx="3.5"/><circle cx="8" cy="8" r="1.1" fill="currentColor" stroke="none"/><path d="M8 11v6M12 17v-6M12 13.6c0-1.6 1.1-2.6 2.5-2.6S17 12 17 13.6V17"/>',
+};
+
+const links = [
+  { label: `E-mail: ${EMAIL}`, href: `mailto:${EMAIL}`, icon: 'email', external: false },
+  ...SOCIALS.map((s) => ({ label: `${s.name} (abre em nova aba)`, href: s.url, icon: s.icon, external: true })),
+];
 ---
 
 <section class="section contact-section" id="contato" aria-labelledby="contact-title">
@@ -13,21 +27,25 @@ import { EMAIL, SOCIALS } from '../config/site';
     <div data-reveal>
       <WhatsAppButton size="lg" />
     </div>
-    <p class="contact__micro" data-reveal>Respondemos em até 1 dia útil.</p>
 
-    <div class="contact__more" data-reveal>
-      <!-- TODO [PLACEHOLDER]: e-mail e redes ficam em src/config/site.ts -->
-      <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-      <ul class="contact__socials" role="list">
-        {
-          SOCIALS.map((s) => (
-            <li>
-              <a href={s.url}>{s.name}</a>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
+    <!-- TODO [PLACEHOLDER]: e-mail e redes ficam em src/config/site.ts -->
+    <ul class="contact__icons" role="list" data-reveal>
+      {
+        links.map((link) => (
+          <li>
+            <a
+              class="contact__icon"
+              href={link.href}
+              aria-label={link.label}
+              title={link.label}
+              {...(link.external ? { target: '_blank', rel: 'noopener' } : {})}
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" set:html={ICONS[link.icon]} />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
   </div>
 </section>
 
@@ -68,58 +86,55 @@ import { EMAIL, SOCIALS } from '../config/site';
     text-wrap: balance;
   }
 
-  .contact__micro {
-    font-family: var(--font-mono);
-    font-size: 0.8125rem;
-    color: var(--color-muted);
-  }
-
-  .contact__more {
+  /* E-mail e redes como ícones no estilo "cartoon" (borda grossa + sombra dura, afundam no hover). */
+  .contact__icons {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 4px 24px;
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    color: var(--color-muted);
-  }
-
-  .contact__socials {
-    display: flex;
-    gap: 24px;
-    margin: 0;
+    gap: 16px;
+    margin: 8px 0 0;
     padding: 0;
     list-style: none;
   }
 
-  /* Links com sublinhado que cresce da esquerda no hover. */
-  .contact__more a {
-    position: relative;
-    display: inline-block;
-    padding: 10px 0;
-    text-decoration: none;
-    transition: color 0.2s ease;
+  .contact__icon {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border: var(--toon-border) solid var(--color-ink);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    box-shadow: var(--toon-depth) var(--toon-depth) 0 0 var(--color-ink);
+    color: var(--color-ink);
+    transition:
+      translate 0.16s var(--motion-ease),
+      box-shadow 0.16s var(--motion-ease),
+      color 0.2s ease;
   }
 
-  .contact__more a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 6px;
-    height: 1px;
-    background: currentColor;
-    transform: scaleX(0.3);
-    transform-origin: left;
-    opacity: 0.6;
-    transition: transform 0.35s var(--motion-ease);
-  }
-
-  .contact__more a:hover {
+  .contact__icon:hover {
+    translate: 2px 2px;
+    box-shadow: 1px 1px 0 0 var(--color-accent);
     color: var(--color-accent);
   }
 
-  .contact__more a:hover::after {
-    transform: scaleX(1);
+  .contact__icon:active {
+    translate: var(--toon-depth) var(--toon-depth);
+    box-shadow: none;
+  }
+
+  .contact__icon svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .contact__icon {
+      transition: none;
+    }
   }
 </style>

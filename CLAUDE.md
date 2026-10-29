@@ -58,7 +58,6 @@ Os textos abaixo são a versão atual. Os marcados com `[PLACEHOLDER]` são gen�
 - Título: **"Soluções além do código."** (o slogan).
 - Subtítulo: "Nós criamos [automações / sistemas / apps / relatórios / sites]", com a palavra alternando sozinha.
 - Botão: **"Chamar no WhatsApp"**
-- Microtexto abaixo do botão: "Resposta em até 1 dia útil."
 
 ### 2. O que nós resolvemos — "Serve pra mim?"
 Título no site: **"Soluções"**. Descrição: "Encontramos o que toma tempo da sua equipe e transformamos em algo que funciona sozinho. Veja o antes e o depois de cada tipo de trabalho."
@@ -109,9 +108,9 @@ Título no site: **"Sobre"**.
 
 ### 6. Contato
 - Título no site: **"Contato"**. Frase principal embaixo: **"Conte para nós o que está dando trabalho."**
-- Embaixo do botão: "Respondemos em até 1 dia útil."
 - Botão grande: "Chamar no WhatsApp" (link `https://wa.me/55XXXXXXXXXXX` `[PLACEHOLDER]` com mensagem pré-preenchida).
-- Abaixo, menores: e-mail `[PLACEHOLDER]` e ícones de redes `[PLACEHOLDER: quais redes]`.
+- Abaixo: **ícones** (estilo cartoon, com link) de e-mail `[PLACEHOLDER]`, Instagram e LinkedIn `[PLACEHOLDER: links e se vale manter as redes]`. As redes vêm de `SOCIALS` em `src/config/site.ts` (apagar a linha tira a rede do site).
+- **Sem** prazo de resposta no site ("Resposta em até 1 dia útil" foi removido em 29/10/2026).
 - Rodapé: Nukki Tech · CNPJ `[PLACEHOLDER]` · nukkitech.com.br
 
 ### Fora do site (não adicionar)

@@ -20,9 +20,10 @@ export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURICo
 export const EMAIL = 'contato@nukkitech.com.br';
 
 // TODO [PLACEHOLDER: quais redes]: confirmar redes e links com o Gustavo.
-export const SOCIALS: { name: string; url: string }[] = [
-  { name: 'Instagram', url: '#' },
-  { name: 'LinkedIn', url: '#' },
+// Para tirar uma rede do site, apague a linha dela. Ícones disponíveis: instagram, linkedin.
+export const SOCIALS: { name: string; url: string; icon: 'instagram' | 'linkedin' }[] = [
+  { name: 'Instagram', url: '#', icon: 'instagram' },
+  { name: 'LinkedIn', url: '#', icon: 'linkedin' },
 ];
 
 // TODO [PLACEHOLDER]: CNPJ (deixe vazio para esconder do rodapé).
