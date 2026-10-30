@@ -1,0 +1,724 @@
+---
+/*
+  Telas ilustrativas do caso "Central de automações" (perícia contábil), em HTML/CSS.
+  Dados 100% fictícios (usuária, arquivos e números inventados para a ilustração).
+  - login:      entrada no sistema.
+  - inicio:     dados da usuária + histórico de extrações.
+  - setor:      Trabalhista aberto, com as automações em cards (Holerites, Extratos).
+  - envio:      escolher arquivo/pasta e começar a extração.
+  - progresso:  quantos de quantos já foram extraídos.
+
+  Identidade própria, de propósito diferente do site (é outro produto): cinza claro,
+  lateral verde-petróleo, fonte do sistema, cantos arredondados, sem grade/violeta/mono.
+  Cores fixas: não acompanham o modo claro/escuro do site, como um print de verdade.
+  O texto escala com a largura (unidades cqw), então serve no cartão e na janela.
+*/
+export type HubScreenName = 'login' | 'inicio' | 'setor' | 'envio' | 'progresso';
+
+interface Props {
+  screen: HubScreenName;
+  label: string;
+}
+const { screen, label } = Astro.props;
+
+const SECTORS = ['Trabalhista', 'Previdenciário', 'Cível', 'Tributário', 'Comercial'];
+const activeSector = screen === 'inicio' ? null : 'Trabalhista';
+
+const GROUPS = [
+  { name: 'Holerites', kind: 'doc', items: ['Empresa Alfa', 'Empresa Beta', 'Prefeitura Alfa', 'Prefeitura Beta'] },
+  { name: 'Extratos bancários', kind: 'bank', items: ['Itaú', 'Sicredi', 'Bradesco', 'Caixa', 'Santander', 'Sicoob'] },
+];
+const initials = (name: string) =>
+  name
+    .split(' ')
+    .filter((w) => w.length > 2 || w === name)
+    .map((w) => w[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
+
+const HISTORY = [
+  ['28/10', 'Holerite · Empresa Alfa', '60 arquivos'],
+  ['27/10', 'Extrato · Sicoob', '24 arquivos'],
+  ['24/10', 'Holerite · Prefeitura Beta', '48 arquivos'],
+  ['22/10', 'Extrato · Itaú', '36 arquivos'],
+];
+
+const DONE = ['holerite_2021-01.pdf', 'holerite_2021-02.pdf', 'holerite_2021-03.pdf'];
+const crumb = ['Trabalhista', 'Holerites', 'Empresa Alfa'];
+---
+
+<div class:list={['shot', `shot--${screen}`]} role="img" aria-label={`${label} (tela ilustrativa com dados fictícios)`}>
+  {
+    screen === 'login' ? (
+      <div class="login">
+        <div class="login__brand">
+          <span class="brand">
+            <span class="brand__mark">C</span>
+            Central de Automações
+          </span>
+          <span class="login__tag">Os documentos do escritório, organizados em segundos.</span>
+        </div>
+        <div class="login__form">
+          <span class="login__title">Entrar</span>
+          <span class="field">
+            <span class="field__label">E-mail</span>
+            <span class="field__input">ana@exemplo.com</span>
+          </span>
+          <span class="field">
+            <span class="field__label">Senha</span>
+            <span class="field__input">••••••••••</span>
+          </span>
+          <span class="btn btn--full">Acessar</span>
+          <span class="link">Esqueci minha senha</span>
+        </div>
+      </div>
+    ) : (
+      <div class="app">
+        <div class="side">
+          <span class="brand">
+            <span class="brand__mark">C</span>
+            Central
+          </span>
+          <span class:list={['side__item', screen === 'inicio' && 'is-on']}>Início</span>
+          <span class="side__label">Setores</span>
+          {SECTORS.map((sector) => (
+            <span class:list={['side__item', sector === activeSector && 'is-on']}>{sector}</span>
+          ))}
+        </div>
+
+        <div class="page">
+          <div class="top">
+            <span class="search">Buscar automação…</span>
+            <span class="user">
+              <span class="avatar">AE</span>
+              Ana Exemplo
+            </span>
+          </div>
+
+          <div class="main">
+            {screen === 'inicio' && (
+              <>
+                <span class="title">Olá, Ana</span>
+                <span class="muted">Perita contábil · último acesso hoje, 09:12</span>
+                <div class="stats">
+                  <span class="panel stat">
+                    <span class="muted">Extrações no mês</span>
+                    <span class="stat__n">18</span>
+                  </span>
+                  <span class="panel stat">
+                    <span class="muted">Arquivos lidos</span>
+                    <span class="stat__n">412</span>
+                  </span>
+                  <span class="panel stat">
+                    <span class="muted">Setores</span>
+                    <span class="stat__n">5</span>
+                  </span>
+                </div>
+                <div class="panel table">
+                  <span class="table__head">Histórico de extrações</span>
+                  {HISTORY.map(([date, name, files]) => (
+                    <span class="table__row">
+                      <span class="muted">{date}</span>
+                      <span>{name}</span>
+                      <span class="muted">{files}</span>
+                      <span class="pill">Concluído</span>
+                    </span>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {screen === 'setor' && (
+              <>
+                <span class="title">Trabalhista</span>
+                {GROUPS.map((group, g) => (
+                  <div class="group">
+                    <span class="h">{group.name}</span>
+                    <div class="cards">
+                      {group.items.map((item, i) => (
+                        <span class:list={['panel', 'card', g === 0 && i === 0 && 'is-hover']}>
+                          {group.kind === 'doc' ? (
+                            <span class="card__icon">
+                              <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z M14 3v5h5 M9 13h6 M9 17h4" />
+                              </svg>
+                            </span>
+                          ) : (
+                            <span class="card__icon card__icon--bank">{initials(item)}</span>
+                          )}
+                          <span class="card__name">{item}</span>
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
+
+            {(screen === 'envio' || screen === 'progresso') && (
+              <>
+                <span class="crumb">
+                  {crumb.map((c, i) => (
+                    <span class:list={[i === crumb.length - 1 && 'is-last']}>{c}</span>
+                  ))}
+                </span>
+                <span class="title">Holerites · Empresa Alfa</span>
+
+                {screen === 'envio' ? (
+                  <>
+                    <span class="drop">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" />
+                      </svg>
+                      <span>
+                        <span class="drop__name">holerites_2019-2023</span>
+                        <span class="muted">Pasta · 60 arquivos PDF</span>
+                      </span>
+                      <span class="link drop__swap">Trocar</span>
+                    </span>
+                    <span class="muted small">Arraste um arquivo ou uma pasta, ou clique para escolher.</span>
+                    <span class="btn btn--right">Começar extração</span>
+                  </>
+                ) : (
+                  <>
+                    <div class="panel progress">
+                      <span class="progress__head">
+                        <span>
+                          <span class="progress__n">37</span> de 60 arquivos extraídos
+                        </span>
+                        <span class="muted">62%</span>
+                      </span>
+                      <span class="bar">
+                        <span />
+                      </span>
+                      <span class="done">
+                        {DONE.map((file) => (
+                          <span class="done__row">
+                            <span class="check">✓</span>
+                            {file}
+                          </span>
+                        ))}
+                        <span class="done__row is-now">
+                          <span class="spin" />
+                          holerite_2022-02.pdf
+                        </span>
+                      </span>
+                    </div>
+                  </>
+                )}
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    )
+  }
+</div>
+
+<style>
+  /* Paleta própria do sistema ilustrado (fixa, independente do tema do site). */
+  .shot {
+    --hub-bg: #eef1f4;
+    --hub-surface: #ffffff;
+    --hub-line: #dde3e8;
+    --hub-ink: #1f2a33;
+    --hub-muted: #5b6873;
+    --hub-side: #133f3d;
+    --hub-side-ink: #c9dedb;
+    --hub-primary: #0f766e;
+    --hub-primary-soft: #e3f2ef;
+    --hub-ok-bg: #dcf3e4;
+    --hub-ok: #1d6b3a;
+
+    container-type: inline-size;
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    display: grid;
+    background: var(--hub-bg);
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.35;
+    color: var(--hub-ink);
+    text-align: left;
+  }
+
+  /* cqw no próprio container mede o pai; por isso o tamanho base vai nos filhos. */
+  .shot > * {
+    font-size: 1.8cqw;
+  }
+
+  .muted {
+    display: block;
+    color: var(--hub-muted);
+  }
+
+  .small {
+    font-size: 1.35cqw;
+  }
+
+  .link {
+    color: var(--hub-primary);
+    font-size: 1.35cqw;
+    font-weight: 600;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 1cqw;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .brand__mark {
+    display: grid;
+    place-items: center;
+    width: 2.8cqw;
+    height: 2.8cqw;
+    border-radius: 0.8cqw;
+    background: #2bb3a3;
+    color: var(--hub-side);
+    font-size: 1.6cqw;
+    font-weight: 800;
+  }
+
+  .btn {
+    padding: 1cqw 2.2cqw;
+    border-radius: 0.6cqw;
+    background: var(--hub-primary);
+    color: #fff;
+    font-weight: 600;
+    text-align: center;
+    box-shadow: 0 1px 2px rgb(15 118 110 / 0.35);
+  }
+
+  .btn--full {
+    display: block;
+  }
+
+  .btn--right {
+    align-self: flex-end;
+    margin-top: auto;
+  }
+
+  .panel {
+    border: 1px solid var(--hub-line);
+    border-radius: 1cqw;
+    background: var(--hub-surface);
+    box-shadow: 0 1px 2px rgb(16 24 32 / 0.05);
+  }
+
+  .h {
+    font-size: 1.45cqw;
+    font-weight: 600;
+    color: var(--hub-muted);
+  }
+
+  .title {
+    font-size: 2.6cqw;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+
+  /* ---------- Login: faixa da marca à esquerda + formulário ---------- */
+  .login {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .login__brand {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 4cqw;
+    background: linear-gradient(160deg, #18504d, var(--hub-side));
+  }
+
+  .login__tag {
+    max-width: 80%;
+    font-size: 2.6cqw;
+    font-weight: 600;
+    line-height: 1.2;
+    color: #fff;
+  }
+
+  .login__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.6cqw;
+    padding: 0 6cqw;
+    background: var(--hub-surface);
+  }
+
+  .login__title {
+    font-size: 2.6cqw;
+    font-weight: 700;
+  }
+
+  .login__form .link {
+    text-align: center;
+  }
+
+  .field {
+    display: grid;
+    gap: 0.5cqw;
+  }
+
+  .field__label {
+    font-size: 1.35cqw;
+    font-weight: 600;
+    color: var(--hub-muted);
+  }
+
+  .field__input {
+    padding: 0.9cqw 1.2cqw;
+    border: 1px solid var(--hub-line);
+    border-radius: 0.6cqw;
+    background: #f8fafb;
+  }
+
+  /* ---------- App: lateral escura + barra de cima + conteúdo ---------- */
+  .app {
+    display: grid;
+    grid-template-columns: 21% 1fr;
+    min-height: 0;
+  }
+
+  .side {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4cqw;
+    padding: 2cqw 1.4cqw;
+    background: var(--hub-side);
+    color: var(--hub-side-ink);
+  }
+
+  .side .brand {
+    margin: 0 0 2cqw 0.4cqw;
+  }
+
+  .side__label {
+    margin: 1.6cqw 0 0.4cqw 1cqw;
+    font-size: 1.2cqw;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.7;
+  }
+
+  .side__item {
+    padding: 0.7cqw 1cqw;
+    border-radius: 0.6cqw;
+  }
+
+  .side__item.is-on {
+    background: rgb(255 255 255 / 0.12);
+    box-shadow: inset 0.35cqw 0 0 #2bb3a3;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .page {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2cqw;
+    padding: 1.2cqw 2.6cqw;
+    border-bottom: 1px solid var(--hub-line);
+    background: var(--hub-surface);
+  }
+
+  .search {
+    width: 40%;
+    padding: 0.7cqw 1.4cqw;
+    border-radius: 99px;
+    background: var(--hub-bg);
+    color: var(--hub-muted);
+    font-size: 1.35cqw;
+  }
+
+  .user {
+    display: flex;
+    align-items: center;
+    gap: 0.9cqw;
+    font-size: 1.4cqw;
+    font-weight: 600;
+  }
+
+  .avatar {
+    display: grid;
+    place-items: center;
+    width: 3cqw;
+    height: 3cqw;
+    border-radius: 50%;
+    background: var(--hub-primary-soft);
+    color: var(--hub-primary);
+    font-size: 1.2cqw;
+    font-weight: 700;
+  }
+
+  .main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4cqw;
+    min-width: 0;
+    padding: 2.2cqw 2.6cqw;
+  }
+
+  /* ---------- Início ---------- */
+  .main > .muted {
+    margin-top: -1cqw;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.4cqw;
+  }
+
+  .stat {
+    padding: 1.3cqw 1.6cqw;
+    font-size: 1.35cqw;
+  }
+
+  .stat__n {
+    display: block;
+    margin-top: 0.3cqw;
+    font-size: 3cqw;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .table {
+    display: grid;
+    padding: 0.4cqw 1.6cqw;
+  }
+
+  .table__head {
+    padding: 1cqw 0;
+    font-weight: 600;
+  }
+
+  .table__row {
+    display: grid;
+    grid-template-columns: 0.5fr 1.6fr 1fr auto;
+    align-items: center;
+    gap: 1cqw;
+    padding: 0.75cqw 0;
+    border-top: 1px solid var(--hub-line);
+    white-space: nowrap;
+  }
+
+  .pill {
+    padding: 0.2cqw 1cqw;
+    border-radius: 99px;
+    background: var(--hub-ok-bg);
+    color: var(--hub-ok);
+    font-size: 1.25cqw;
+    font-weight: 600;
+  }
+
+  /* ---------- Setor (Trabalhista) ---------- */
+  .group {
+    display: grid;
+    gap: 0.8cqw;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.2cqw;
+  }
+
+  .card {
+    display: grid;
+    gap: 1cqw;
+    padding: 1.4cqw;
+    font-weight: 600;
+    min-width: 0;
+  }
+
+  .card__name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Card "com o mouse em cima": mostra que é clicável. */
+  .card.is-hover {
+    border-color: var(--hub-primary);
+    box-shadow: 0 0.6cqw 1.6cqw -0.6cqw rgb(15 118 110 / 0.45);
+  }
+
+  .card__icon {
+    display: grid;
+    place-items: center;
+    width: 3.4cqw;
+    height: 3.4cqw;
+    border-radius: 0.8cqw;
+    background: var(--hub-primary-soft);
+    color: var(--hub-primary);
+  }
+
+  .card__icon svg {
+    width: 60%;
+    height: 60%;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* Bancos só com iniciais (sem logos de marcas reais). */
+  .card__icon--bank {
+    border-radius: 50%;
+    background: #e8edf2;
+    color: #3d4b57;
+    font-size: 1.2cqw;
+    font-weight: 700;
+  }
+
+  /* ---------- Envio e progresso ---------- */
+  .crumb {
+    display: flex;
+    gap: 0.8cqw;
+    font-size: 1.35cqw;
+    color: var(--hub-muted);
+  }
+
+  .crumb span + span::before {
+    content: '/';
+    margin-right: 0.8cqw;
+  }
+
+  .crumb .is-last {
+    color: var(--hub-ink);
+    font-weight: 600;
+  }
+
+  .drop {
+    display: flex;
+    align-items: center;
+    gap: 1.6cqw;
+    padding: 2.6cqw;
+    border: 2px dashed #8cc9c0;
+    border-radius: 1cqw;
+    background: var(--hub-surface);
+  }
+
+  .drop svg {
+    width: 4.6cqw;
+    height: 4.6cqw;
+    flex: none;
+    fill: var(--hub-primary-soft);
+    stroke: var(--hub-primary);
+    stroke-width: 1.6;
+    stroke-linejoin: round;
+  }
+
+  .drop__name {
+    display: block;
+    font-weight: 600;
+  }
+
+  .drop__swap {
+    margin-left: auto;
+  }
+
+  .progress {
+    display: grid;
+    gap: 1.4cqw;
+    padding: 2cqw;
+  }
+
+  .progress__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    font-weight: 600;
+  }
+
+  .progress__n {
+    font-size: 3.6cqw;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--hub-primary);
+  }
+
+  .bar {
+    height: 1.1cqw;
+    border-radius: 99px;
+    background: var(--hub-bg);
+    overflow: hidden;
+  }
+
+  .bar span {
+    display: block;
+    width: 61.6%;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--hub-primary);
+  }
+
+  .done {
+    display: grid;
+    gap: 0.6cqw;
+    font-size: 1.4cqw;
+    color: var(--hub-muted);
+  }
+
+  .done__row {
+    display: flex;
+    align-items: center;
+    gap: 1cqw;
+  }
+
+  .done__row.is-now {
+    color: var(--hub-ink);
+    font-weight: 600;
+  }
+
+  .check {
+    display: grid;
+    place-items: center;
+    width: 1.8cqw;
+    height: 1.8cqw;
+    border-radius: 50%;
+    background: var(--hub-ok-bg);
+    color: var(--hub-ok);
+    font-size: 1.1cqw;
+    font-weight: 700;
+  }
+
+  .spin {
+    width: 1.8cqw;
+    height: 1.8cqw;
+    box-sizing: border-box;
+    border: 0.3cqw solid var(--hub-line);
+    border-top-color: var(--hub-primary);
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .spin {
+      animation: none;
+    }
+  }
+</style>

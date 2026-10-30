@@ -10,18 +10,40 @@
   Prints sempre com dados fictícios.
 */
 import CasePrint from './CasePrint.astro';
+import HubScreen, { type HubScreenName } from './prints/HubScreen.astro';
 
-// TODO [PLACEHOLDER]: todos os trabalhos abaixo são genéricos. Trocar por trabalhos reais.
-const cases = [
+type Case = {
+  sector: string;
+  title: string;
+  before: string;
+  after: string;
+  result: string;
+  /** Linha extra na janela de detalhes (opcional). */
+  note?: string;
+  tags: readonly string[];
+  print: 'dashboard' | 'table' | 'phone';
+  /** Telas ilustrativas próprias do caso (substituem os prints genéricos). */
+  screens?: readonly HubScreenName[];
+  /** Tela que aparece no cartão do carrossel (padrão: a primeira). */
+  cover?: HubScreenName;
+};
+
+const cases: readonly Case[] = [
+  // Caso real (sem nome de cliente). Telas ilustrativas com dados fictícios.
   {
-    sector: 'Escritório de serviços',
-    title: '[PLACEHOLDER] Leitura automática de documentos',
-    before: 'Documentos analisados à mão, página por página.',
-    after: 'Informações extraídas e organizadas automaticamente.',
-    result: '[X horas → Y min]',
-    tags: ['Automação', 'Extração de dados'],
+    sector: 'Perícia contábil',
+    title: 'Central de automações',
+    before: 'Holerites, extratos e outros documentos em PDF digitados à mão no Excel, um por um.',
+    after:
+      'Um sistema com as automações de cada área. Escolhe o tipo de documento, coloca o arquivo ou a pasta, e os dados saem organizados no Excel.',
+    result: '4 h → segundos',
+    note: 'O tempo é de 5 anos de holerites de uma pessoa. Menos erros de digitação. Tudo roda no computador do escritório: nenhum dado pessoal é enviado para IA.',
+    tags: ['Automação', 'Sistema', 'Leitura de PDF'],
     print: 'table',
+    screens: ['login', 'inicio', 'setor', 'envio', 'progresso'],
+    cover: 'setor',
   },
+  // TODO [PLACEHOLDER]: os trabalhos abaixo são genéricos. Trocar por trabalhos reais.
   {
     sector: 'Comércio',
     title: '[PLACEHOLDER] Painel de vendas e estoque',
@@ -40,7 +62,7 @@ const cases = [
     tags: ['Sistema', 'Mobile first'],
     print: 'phone',
   },
-] as const;
+];
 
 const pad = (n: number) => String(n).padStart(2, '0');
 const arrow = 'M5 12h14M13 6l6 6-6 6';
@@ -76,7 +98,11 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
         <li class:list={['case', i === 0 && 'is-active']} data-case>
           <button class="case__open" type="button" data-case-open={i} aria-haspopup="dialog">
             <span class="case__media">
-              <CasePrint variant={item.print} label={item.title} />
+              {item.screens ? (
+                <HubScreen screen={item.cover ?? item.screens[0]} label={item.title} />
+              ) : (
+                <CasePrint variant={item.print} label={item.title} />
+              )}
               <span class="case__more" aria-hidden="true">
                 Ver detalhes
                 <svg viewBox="0 0 24 24" focusable="false">
@@ -147,13 +173,27 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
                   <dt>Resultado</dt>
                   <dd>{item.result}</dd>
                 </div>
+                {item.note && (
+                  <div>
+                    <dt>Além disso</dt>
+                    <dd>{item.note}</dd>
+                  </div>
+                )}
               </dl>
             </div>
             {/* TODO [PLACEHOLDER]: prints do trabalho (dados fictícios). */}
             <div class="panel__gallery">
+              {item.screens ? (
+                item.screens.map((screen, n) => (
+                  <HubScreen screen={screen} label={`${item.title}, tela ${n + 1}`} />
+                ))
+              ) : (
+                <>
               <CasePrint variant={item.print} label={`${item.title}, tela 1`} />
               <CasePrint variant={item.print === 'phone' ? 'phone' : 'dashboard'} label={`${item.title}, tela 2`} />
               <CasePrint variant={item.print === 'table' ? 'dashboard' : 'table'} label={`${item.title}, tela 3`} />
+                </>
+              )}
             </div>
           </article>
         ))
@@ -410,7 +450,8 @@ const arrowLeft = 'M19 12H5M11 6l-6 6 6 6';
     background: var(--color-accent);
   }
 
-  .case__media :global(.print) {
+  .case__media :global(.print),
+  .case__media :global(.shot) {
     border-radius: calc(var(--radius) - 1px);
   }
 
