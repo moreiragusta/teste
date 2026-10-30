@@ -25,7 +25,7 @@ const SECTORS = ['Trabalhista', 'Previdenciário', 'Cível', 'Tributário', 'Com
 const activeSector = screen === 'inicio' ? null : 'Trabalhista';
 
 const GROUPS = [
-  { name: 'Holerites', kind: 'doc', items: ['Empresa Alfa', 'Empresa Beta', 'Prefeitura Alfa', 'Prefeitura Beta'] },
+  { name: 'Holerites', kind: 'doc', items: ['Empresa Alfa', 'Empresa Beta', 'Prefeitura de Campinas', 'Prefeitura de Sorocaba'] },
   { name: 'Extratos bancários', kind: 'bank', items: ['Itaú', 'Sicredi', 'Bradesco', 'Caixa', 'Santander', 'Sicoob'] },
 ];
 const initials = (name: string) =>
@@ -40,7 +40,7 @@ const initials = (name: string) =>
 const HISTORY = [
   ['28/10', 'Holerite · Empresa Alfa', '60 arquivos'],
   ['27/10', 'Extrato · Sicoob', '24 arquivos'],
-  ['24/10', 'Holerite · Prefeitura Beta', '48 arquivos'],
+  ['24/10', 'Holerite · Prefeitura de Sorocaba', '48 arquivos'],
   ['22/10', 'Extrato · Itaú', '36 arquivos'],
 ];
 
@@ -52,18 +52,16 @@ const crumb = ['Trabalhista', 'Holerites', 'Empresa Alfa'];
   {
     screen === 'login' ? (
       <div class="login">
-        <div class="login__brand">
-          <span class="brand">
+        <div class="login__form">
+          <span class="brand login__brand">
             <span class="brand__mark">C</span>
             Central de Automações
           </span>
-          <span class="login__tag">Os documentos do escritório, organizados em segundos.</span>
-        </div>
-        <div class="login__form">
           <span class="login__title">Entrar</span>
+          <span class="muted small">Use o e-mail do escritório.</span>
           <span class="field">
             <span class="field__label">E-mail</span>
-            <span class="field__input">ana@exemplo.com</span>
+            <span class="field__input">ana.ribeiro@escritorio.com</span>
           </span>
           <span class="field">
             <span class="field__label">Senha</span>
@@ -91,8 +89,8 @@ const crumb = ['Trabalhista', 'Holerites', 'Empresa Alfa'];
           <div class="top">
             <span class="search">Buscar automação…</span>
             <span class="user">
-              <span class="avatar">AE</span>
-              Ana Exemplo
+              <span class="avatar">AR</span>
+              Ana Ribeiro
             </span>
           </div>
 
@@ -321,35 +319,42 @@ const crumb = ['Trabalhista', 'Holerites', 'Empresa Alfa'];
     line-height: 1.15;
   }
 
-  /* ---------- Login: faixa da marca à esquerda + formulário ---------- */
+  /* ---------- Login: página inteira com o formulário no centro ---------- */
   .login {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .login__brand {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 4cqw;
-    background: linear-gradient(160deg, #18504d, var(--hub-side));
-  }
-
-  .login__tag {
-    max-width: 80%;
-    font-size: 2.6cqw;
-    font-weight: 600;
-    line-height: 1.2;
-    color: #fff;
+    place-items: center;
+    /* Detalhes verdes: faixa fina no topo e um brilho suave nos cantos. */
+    border-top: 0.6cqw solid var(--hub-primary);
+    background:
+      radial-gradient(40% 50% at 0% 100%, rgb(43 179 163 / 0.16), transparent 70%),
+      radial-gradient(35% 45% at 100% 0%, rgb(43 179 163 / 0.12), transparent 70%),
+      var(--hub-bg);
   }
 
   .login__form {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 1.6cqw;
-    padding: 0 6cqw;
+    gap: 1.4cqw;
+    width: 36%;
+    padding: 3cqw;
+    border: 1px solid var(--hub-line);
+    border-radius: 1.2cqw;
     background: var(--hub-surface);
+    box-shadow: 0 1.4cqw 3cqw -1.6cqw rgb(16 24 32 / 0.25);
+  }
+
+  .login__brand {
+    margin-bottom: 0.6cqw;
+    color: var(--hub-ink);
+  }
+
+  .login__brand .brand__mark {
+    background: var(--hub-primary);
+    color: #fff;
+  }
+
+  .login__form .muted {
+    margin-top: -1cqw;
   }
 
   .login__title {
@@ -548,9 +553,7 @@ const crumb = ['Trabalhista', 'Holerites', 'Empresa Alfa'];
   }
 
   .card__name {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    line-height: 1.2;
   }
 
   /* Card "com o mouse em cima": mostra que é clicável. */

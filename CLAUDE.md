@@ -72,15 +72,15 @@ Quatro cartões no formato **antes → depois**, numa **pilha em cascata**: um n
 
 ### 3. Casos — "Eles já fizeram isso?"
 Título no site: **"Casos"**. Descrição: "Alguns trabalhos que já entregamos. Sem nome de cliente e com dados fictícios nas telas, mas com o problema e o resultado de verdade."
-Trabalhos num **carrossel com destaque** (inspirado nos "latest works" de cristophermartins.com, sem copiar): o trabalho em destaque em tamanho cheio com borda violeta, os outros menores e apagados; setas, arrastar, ←/→, barra de progresso e contador. Cada trabalho: print, setor, título, resultado e **etiquetas** (ex.: Automação, UI/UX, Mobile first). Clicar num trabalho leva ele para o destaque do carrossel e abre uma **janela grande no centro** (dados à esquerda, imagens em destaque à direita); no celular, folha que sobe de baixo com o conteúdo primeiro e as imagens depois.
+Trabalhos num **carrossel com destaque** (inspirado nos "latest works" de cristophermartins.com, sem copiar): o trabalho em destaque em tamanho cheio com borda violeta, os outros menores e apagados; setas, arrastar, ←/→ e **bolinhas** (uma por trabalho; a do atual fica mais comprida). **Sem contador visível** ("01/03" removido em 30/10/2026, também da janela). Cada trabalho: print, setor, título, resultado e **etiquetas** (ex.: Automação, UI/UX, Mobile first). Clicar num trabalho leva ele para o destaque do carrossel e abre uma **janela grande no centro** (dados à esquerda, imagens em destaque à direita); no desktop, dados e imagens **rolam de forma independente**; no celular, folha que sobe de baixo com o conteúdo primeiro e as imagens depois.
 
 Ficha de cada trabalho: **setor · antes · depois · resultado** (+ "Além disso" opcional). Telas ilustrativas desenhadas em HTML/CSS, sempre com dados fictícios.
 
 **Caso 1 (real, confirmado em 30/10/2026): Central de automações**, escritório de perícia contábil.
 - Sistema com login, início (dados da usuária + histórico) e lateral de setores (Trabalhista, Previdenciário, Cível, Tributário, Comercial), cada um com suas automações. Todas extraem dados de PDFs e organizam no Excel.
-- No site só aparece o Trabalhista: Holerites (de empresas e de municípios; nomes fictícios "Empresa Alfa", "Prefeitura Alfa"…) e Extratos (Itaú, Sicredi, Bradesco, Caixa, Santander, Sicoob; só nomes, sem logos). Card → escolher arquivo/pasta → "Começar extração" → "37 de 60" com barra.
+- No site só aparece o Trabalhista: Holerites (de empresas e de municípios; "Empresa Alfa/Beta" e prefeituras com nome de cidade, ex.: "Prefeitura de Campinas") e Extratos (Itaú, Sicredi, Bradesco, Caixa, Santander, Sicoob; só nomes, sem logos). Card → escolher arquivo/pasta → "Começar extração" → "37 de 60" com barra.
 - Resultado: **4 h → segundos** (5 anos de holerites de uma pessoa; antes digitados à mão por estagiário/auxiliar). Menos erros. Roda no computador do escritório: nenhum dado pessoal vai para IA.
-- Telas em `src/components/prints/HubScreen.astro`, com **identidade própria, de propósito diferente do site** (cinza claro, lateral verde-petróleo, fonte do sistema), fixa: não segue o modo claro/escuro.
+- Telas em `src/components/prints/HubScreen.astro`, com **identidade própria, de propósito diferente do site** (cinza claro, lateral verde-petróleo, fonte do sistema), fixa: não segue o modo claro/escuro. Usuária fictícia com nome normal ("Ana Ribeiro", nada de "Exemplo"). Login: página inteira com o formulário centralizado e só detalhes verdes.
 
 Os outros casos continuam `[PLACEHOLDER]` (TODO em `Cases.astro`).
 
